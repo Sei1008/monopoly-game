@@ -1,0 +1,28 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# IDE specific files (Bỏ qua file cấu hình của các phần mềm code)
+.idea/
+.vscode/
+*.iml
+*.eclipse
+.project
+.classpath
+.settings/
+
+# Maven/Gradle build folders
+target/
+build/
+out/
