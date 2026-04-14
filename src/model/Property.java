@@ -6,6 +6,12 @@ public class Property {
     private int rent;
     private Player owner;
     private String color;
+    private int houses;     
+    private int hotels;      
+    private static final int HOUSE_COST = 50;      
+    private static final int HOTEL_COST = 200;     
+    private static final int HOUSE_REPAIR_COST = 25;    
+    private static final int HOTEL_REPAIR_COST = 100;
 
     public Property(String name,int price,int rent, String color){
         this.name=name;
@@ -33,5 +39,37 @@ public class Property {
     }
     public int getRent(){
         return (owner != null) ? rent : 0;
+    }
+    public int getHouses() {
+        return houses;
+    }
+
+    public int getHotels() {
+        return hotels;
+    }
+
+    public void addHouse() {
+        if (houses < 4) {
+            houses++;
+        }
+    }
+
+    public void addHotel() {
+        if (houses == 4 && hotels < 1) {
+            houses = 0;  // (4 houses = 1 hotel)
+            hotels = 1;
+        }
+    }
+
+    public int getRepairCost() {
+        return (houses * HOUSE_REPAIR_COST) + (hotels * HOTEL_REPAIR_COST);
+    }
+
+    public static int getHouseRepairCost() {
+        return HOUSE_REPAIR_COST;
+    }
+
+    public static int getHotelRepairCost() {
+        return HOTEL_REPAIR_COST;
     }
 }
