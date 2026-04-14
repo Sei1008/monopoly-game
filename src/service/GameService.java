@@ -18,6 +18,13 @@ public class GameService {
         dice= new Dice();
 
     }
+    int rollDice(){
+       int step=dice.getTotal();
+       return step;
+       }
     
 
-}
+    }
+    
+
+
