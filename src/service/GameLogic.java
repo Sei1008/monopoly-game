@@ -58,6 +58,7 @@ public class GameLogic {
                 break;
             case GO_JAIL:
                 handleGoToJail(player);
+                player.UseJailFreeCard();
                 break;
             case TAX:
                 handleTax(player);
@@ -95,7 +96,7 @@ public class GameLogic {
     private void handleGoToJail(Player player){
         System.out.println("GO TO JAIL! Do not pass GO, do not collect $200");
         player.setPosition(10);
-        player.setInJail(true);;
+        player.setInJail(true);
     }
     private void handleTax(Player player){
         int tax=200;

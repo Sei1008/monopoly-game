@@ -7,8 +7,8 @@ public class Player {
     private int money;
     private boolean inJail;
     private int currentPosition;
-    private List<Property> list;   
-
+    private List<Property> list; 
+    private int getOutOfJailCard = 0;  
     public Player(String name){
         this.name=name;
         this.money=1500;
@@ -55,5 +55,22 @@ public class Player {
     }
     public int getPropertiesCount(){
         return list.size();
+    }
+    public void addJailFreeCard(){
+        getOutOfJailCard++;
+    }
+    public boolean hasJailFreeCard(){
+        if(getOutOfJailCard > 0);
+        return true;
+    }
+    public boolean UseJailFreeCard(){
+        if(hasJailFreeCard()){
+            getOutOfJailCard--;
+            setInJail(false);
+            System.out.println(getName() + "used a 'get Out of Jail Free' card! Cards remaining: " + getOutOfJailCard);
+            return true;
+        }
+        System.out.println(getName() + "does not have 'get Out of Jail Free' card");
+        return false;
     }
 }

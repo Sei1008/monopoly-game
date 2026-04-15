@@ -1,21 +1,20 @@
 package model;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Queue;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Chance {
     private Map<Integer, String> chanceCards;
-    private List<Integer> deck;
     private int lastDrawnCardID;
-
+    private Queue<Integer> deck;
     public Chance() {
         chanceCards = new HashMap<>();
-        deck = new ArrayList<>();
-        initializeChance();
-        Collections.shuffle(deck);
+        deck = new LinkedList<>();
+        initializeChance(); 
     }
 
     private void initializeChance() {
@@ -36,29 +35,26 @@ public class Chance {
         chanceCards.put(14, "You have been elected Chairman of the Board. Pay each player $50.");
         chanceCards.put(15, "Your building loan matures. Collect $150.");
 
-        // Populate deck with card IDs (0-15)
-        for (int i = 0; i < 16; i++) {
-            deck.add(i);
+        List <Integer> deckList = new ArrayList<>();
+        for (int i = 0 ; i < 16; i++){
+            deckList.add(i);
         }
+        //Shuffle dlist
+        Collections.shuffle(deckList);
+        //add to deck
+        deck.addAll(deckList);
     }
-
-    public int drawCard() {
-        if (deck.isEmpty()) {
-            // Reshuffle deck when empty
-            for (int i = 0; i < 16; i++) {
-                deck.add(i);
-            }
-            Collections.shuffle(deck);
-        }
-        lastDrawnCardID = deck.remove(0);
-        return lastDrawnCardID;
-    }
-
+public int drawCard(){
+    int topCard = deck.poll();
+    deck.add(topCard);
+    lastDrawnCardID = topCard;
+    return topCard;
+}
     public String getCardDescription() {
         return chanceCards.get(lastDrawnCardID);
     }
 
-    private void teleportTo(Player player, int targetPosition) {
+    private void moveTo(Player player, int targetPosition) {
         int currentPos = player.getPosition();
         player.setPosition(targetPosition);
 
@@ -100,7 +96,7 @@ public class Chance {
         
         switch (cardID) {
             case 0: // Advance to Boardwalk
-                teleportTo(player, 39);
+                moveTo(player,39);
                 System.out.println(player.getName() + " advances to Boardwalk.");
                 break;
 
@@ -111,19 +107,19 @@ public class Chance {
                 break;
 
             case 2: // Advance to Illinois Avenue
-                teleportTo(player, 24);
+                moveTo(player, 24);
                 System.out.println(player.getName() + " advances to Illinois Avenue.");
                 break;
 
             case 3: // Advance to St. Charles Place
-                teleportTo(player, 11);
+                moveTo(player, 11);
                 System.out.println(player.getName() + " advances to St. Charles Place.");
                 break;
 
             case 4: // case 4 = case 5
             case 5: // Advance to nearest Railroad
                 int nearestRR = findNearestRailroad(player.getPosition());
-                teleportTo(player, nearestRR);
+                moveTo(player, nearestRR);
                 System.out.println(player.getName() + " advances to the nearest Railroad.");
                 
                 Property rrProperty = board.getSquare(nearestRR).getProperty();
@@ -140,7 +136,7 @@ public class Chance {
 
             case 6: // Advance to nearest Utility
                 int nearestUtil = findNearestUtility(player.getPosition());
-                teleportTo(player, nearestUtil);
+                moveTo(player, nearestUtil);
                 System.out.println(player.getName() + " advances to the nearest Utility.");
                 
                 Property utilProperty = board.getSquare(nearestUtil).getProperty();
@@ -164,7 +160,7 @@ public class Chance {
 
             case 8: // Get Out of Jail Free
                 System.out.println(player.getName() + " gets a Get Out of Jail Free card!");
-                // TODO: Implement jail card storage in Player class
+                player.addJailFreeCard();
                 break;
 
             case 9: // Go Back 3 Spaces
@@ -204,7 +200,7 @@ public class Chance {
                 break;
 
             case 13: // Take a trip to Reading Railroad
-                teleportTo(player, 5);
+                moveTo(player, 5);
                 System.out.println(player.getName() + " takes a trip to Reading Railroad.");
                 
                 Property readingRR = board.getSquare(5).getProperty();

@@ -1,5 +1,5 @@
 package model;
-
+import utils.Constants;
 public class Property {
     private String name;
     private int price;
@@ -8,11 +8,6 @@ public class Property {
     private String color;
     private int houses;     
     private int hotels;      
-    private static final int HOUSE_COST = 50;      
-    private static final int HOTEL_COST = 200;     
-    private static final int HOUSE_REPAIR_COST = 25;    
-    private static final int HOTEL_REPAIR_COST = 100;
-
     public Property(String name,int price,int rent, String color){
         this.name=name;
         this.price=price;
@@ -62,14 +57,14 @@ public class Property {
     }
 
     public int getRepairCost() {
-        return (houses * HOUSE_REPAIR_COST) + (hotels * HOTEL_REPAIR_COST);
+        return (houses * Constants.HOUSE_REPAIR_COST) + (hotels * Constants.HOTEL_REPAIR_COST);
     }
 
     public static int getHouseRepairCost() {
-        return HOUSE_REPAIR_COST;
+        return Constants.HOUSE_REPAIR_COST;
     }
 
     public static int getHotelRepairCost() {
-        return HOTEL_REPAIR_COST;
+        return Constants.HOTEL_REPAIR_COST;
     }
 }
