@@ -1,9 +1,6 @@
 # Monopoly Game
 
 A digital implementation of the classic board game Monopoly, built in Java using the MVC (Model-View-Controller) architecture.
-Clone project:
-```bash
-   git clone [https://github.com/Sei1008/monopoly-game.git](https://github.com/Sei1008/monopoly-game.git)
 
 ## 📂 Project Structure
 
@@ -21,6 +18,10 @@ To maintain clean code and a strict separation of concerns, this project follows
 ## 🛠️ Getting Started
 
 1. Clone the repository to your local machine using Git.
+Clone project:
+```bash
+   git clone [https://github.com/Sei1008/monopoly-game.git](https://github.com/Sei1008/monopoly-game.git)
+```
 2. Open the project in your preferred IDE (such as VS Code).
 3. Ensure you have the Java Development Kit (JDK) installed and your environment variables configured.
 4. Compile and run the main entry point of the application to start a new game.
