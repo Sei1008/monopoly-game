@@ -60,8 +60,10 @@ public class Player {
         getOutOfJailCard++;
     }
     public boolean hasJailFreeCard(){
-        if(getOutOfJailCard > 0);
-        return true;
+        if(getOutOfJailCard > 0){
+        return true;    
+        }
+        return false;
     }
     public boolean UseJailFreeCard(){
         if(hasJailFreeCard()){
