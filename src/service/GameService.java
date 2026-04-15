@@ -2,9 +2,7 @@ package service;
 import config.GameConfig;
 import java.util.ArrayList;
 import java.util.List;
-import model.Board;
-import model.Dice;
-import model.Player;
+import model.*;
 
 import model.*;
 import view.GameView;
