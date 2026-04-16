@@ -1,71 +1,152 @@
 package controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
-import model.*;
 
 public class GameController {
 
-    // ================= INPUT NUMBER OF PLAYERS =================
-    public int inputNumberOfPlayers() {
-        while (true) {
-            try {
-                String input = JOptionPane.showInputDialog("Enter number of players:");
-                int n = Integer.parseInt(input);
+    // ===== DATA =====
+    private int expectedPlayers = 0;
+    private List<String> playerNames = new ArrayList<>();
 
-                if (n > 1) return n;
+    private boolean rollClicked = false;
+    private Boolean buyDecision = null;
 
-                JOptionPane.showMessageDialog(null, "Must be at least 2 players!");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Invalid number!");
+    // ===== UI =====
+    @FXML
+    private TextField numPlayersField;
+
+    @FXML
+    private TextField playerNameField;
+
+    @FXML
+    private ListView<String> playerListView;
+
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private Label currentPlayerLabel;
+
+    @FXML
+    private Label diceLabel;
+
+    // ===== INIT =====
+    public void initialize() {
+        statusLabel.setText("Enter number of players");
+    }
+
+    // ===== 1. nhập số người =====
+    @FXML
+    public void handleSetPlayers() {
+        try {
+            int n = Integer.parseInt(numPlayersField.getText());
+
+            if (n < 2 || n > 6) {
+                statusLabel.setText("Players must be 2-6!");
+                return;
             }
+
+            expectedPlayers = n;
+            statusLabel.setText("Add player names");
+
+        } catch (Exception e) {
+            statusLabel.setText("Invalid number!");
         }
     }
 
-    // ================= INPUT PLAYER NAMES =================
-    public List<Player> inputPlayerNames(int n) {
-        List<Player> players = new ArrayList<>();
+    public int getExpectedPlayers() {
+        return expectedPlayers;
+    }
 
-        for (int i = 0; i < n; i++) {
-            String name;
+    // ===== 2. thêm player =====
+    @FXML
+    public void handleAddPlayer() {
 
-            while (true) {
-                name = JOptionPane.showInputDialog("Enter name of player " + (i + 1));
-
-                if (name != null && !name.trim().isEmpty()) break;
-
-                JOptionPane.showMessageDialog(null, "Name cannot be empty!");
-            }
-
-            players.add(new Player(name));
+        if (playerNames.size() >= expectedPlayers) {
+            statusLabel.setText("Enough players!");
+            return;
         }
 
-        return players;
+        String name = playerNameField.getText().trim();
+
+        if (name.isEmpty()) {
+            statusLabel.setText("Enter name!");
+            return;
+        }
+
+        playerNames.add(name);
+        playerListView.getItems().add(name);
+
+        playerNameField.clear();
+        statusLabel.setText("Added: " + name);
     }
 
-    // ================= ROLL DICE CONFIRM =================
-    public void waitForRoll(String playerName) {
-        JOptionPane.showMessageDialog(
-                null,
-                playerName + "'s turn. Click OK to roll dice"
-        );
+    public List<String> getPlayerNames() {
+        return playerNames;
     }
 
-    // ================= BUY PROPERTY =================
-    public boolean askBuyProperty(String propertyName, int price) {
-        int choice = JOptionPane.showConfirmDialog(
-                null,
-                "Buy " + propertyName + " for $" + price + "?",
-                "Buy Property",
-                JOptionPane.YES_NO_OPTION
-        );
+    // ===== 3. start game =====
+    @FXML
+    public void handleStartGame() {
+        if (playerNames.size() < expectedPlayers) {
+            statusLabel.setText("Not enough players!");
+            return;
+        }
 
-        return choice == JOptionPane.YES_OPTION;
+        statusLabel.setText("Game Started!");
     }
 
-    // ================= GENERIC MESSAGE =================
-    public void showMessage(String message) {
-        JOptionPane.showMessageDialog(null, message);
+    // ===== 4. roll dice =====
+    @FXML
+    public void handleRollDice() {
+        rollClicked = true;
+        statusLabel.setText("Roll clicked");
+    }
+
+    public boolean isRollClicked() {
+        return rollClicked;
+    }
+
+    public void resetRoll() {
+        rollClicked = false;
+    }
+
+    // ===== 5. buy decision =====
+    @FXML
+    public void handleBuyYes() {
+        buyDecision = true;
+        statusLabel.setText("Chose YES");
+    }
+
+    @FXML
+    public void handleBuyNo() {
+        buyDecision = false;
+        statusLabel.setText("Chose NO");
+    }
+
+    public Boolean getBuyDecision() {
+        return buyDecision;
+    }
+
+    public void resetBuyDecision() {
+        buyDecision = null;
+    }
+
+    // ===== UI UPDATE (file khác gọi) =====
+
+    public void updateCurrentPlayer(String name) {
+        currentPlayerLabel.setText("Current Player: " + name);
+    }
+
+    public void updateDice(int dice) {
+        diceLabel.setText("Dice: " + dice);
+    }
+
+    public void updateStatus(String msg) {
+        statusLabel.setText(msg);
     }
 }
