@@ -1,7 +1,7 @@
 package service;
 
-import model.*;
 import java.util.List;
+import model.*;
 
 public class GameLogic {
     private Board board;
@@ -19,7 +19,6 @@ public class GameLogic {
     public void playTurn(Player currentPlayer){
         System.out.println("\n--- " + currentPlayer.getName() + "'s Turn ---");
 
-        dice.roll();
         System.out.println("Rolled: " + dice.getDice1() + " + " + dice.getDice2() + " = " + dice.getTotal());
 
         int newPosition = (currentPlayer.getPosition() + dice.getTotal()) % 40;
