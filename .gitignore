@@ -13,6 +13,8 @@
 *.tar.gz
 *.rar
 *.vscode
+.DS_Store
+**/.DS_Store
 
 # IDE specific files (Bỏ qua file cấu hình của các phần mềm code)
 .idea/
