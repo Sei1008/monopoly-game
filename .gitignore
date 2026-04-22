@@ -12,6 +12,7 @@
 *.zip
 *.tar.gz
 *.rar
+*.vscode
 
 # IDE specific files (Bỏ qua file cấu hình của các phần mềm code)
 .idea/

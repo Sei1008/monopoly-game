@@ -1,152 +1,73 @@
 package controller;
-
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import model.*;
 
 public class GameController {
 
-    // ===== DATA =====
-    private int expectedPlayers = 0;
-    private List<String> playerNames = new ArrayList<>();
+    // NHẬP SỐ NG CHƠI
+    public int inputNumberOfPlayers() {
+        while (true) {
+            try {
+                String input = JOptionPane.showInputDialog("Enter number of players:");
+                int n = Integer.parseInt(input);
 
-    private boolean rollClicked = false;
-    private Boolean buyDecision = null;
+                if (n > 1) return n;
 
-    // ===== UI =====
-    @FXML
-    private TextField numPlayersField;
-
-    @FXML
-    private TextField playerNameField;
-
-    @FXML
-    private ListView<String> playerListView;
-
-    @FXML
-    private Label statusLabel;
-
-    @FXML
-    private Label currentPlayerLabel;
-
-    @FXML
-    private Label diceLabel;
-
-    // ===== INIT =====
-    public void initialize() {
-        statusLabel.setText("Enter number of players");
+                JOptionPane.showMessageDialog(null, "Must be at least 2 players!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Invalid number!");
+            }
+        }
     }
 
-    // ===== 1. nhập số người =====
-    @FXML
-    public void handleSetPlayers() {
-        try {
-            int n = Integer.parseInt(numPlayersField.getText());
+    // NHẬP TÊN NG CHƠI
+    public List<Player> inputPlayerNames(int n) {
+        List<Player> players = new ArrayList<>();
 
-            if (n < 2 || n > 6) {
-                statusLabel.setText("Players must be 2-6!");
-                return;
+        for (int i = 0; i < n; i++) {
+            String name;
+
+            while (true) {
+                name = JOptionPane.showInputDialog("Enter name of player " + (i + 1));
+
+                if (name != null && !name.trim().isEmpty()) break;
+
+                JOptionPane.showMessageDialog(null, "Name cannot be empty!");
             }
 
-            expectedPlayers = n;
-            statusLabel.setText("Add player names");
-
-        } catch (Exception e) {
-            statusLabel.setText("Invalid number!");
-        }
-    }
-
-    public int getExpectedPlayers() {
-        return expectedPlayers;
-    }
-
-    // ===== 2. thêm player =====
-    @FXML
-    public void handleAddPlayer() {
-
-        if (playerNames.size() >= expectedPlayers) {
-            statusLabel.setText("Enough players!");
-            return;
+            players.add(new Player(name));
         }
 
-        String name = playerNameField.getText().trim();
-
-        if (name.isEmpty()) {
-            statusLabel.setText("Enter name!");
-            return;
-        }
-
-        playerNames.add(name);
-        playerListView.getItems().add(name);
-
-        playerNameField.clear();
-        statusLabel.setText("Added: " + name);
+        return players;
     }
 
-    public List<String> getPlayerNames() {
-        return playerNames;
+    // ROLL DICE CONFIRM
+public boolean waitForRoll(String playerName) {
+    int choice = JOptionPane.showConfirmDialog(
+            null, 
+            playerName + "'s turn. Do you want to roll the dice?", 
+            "Your Turn", 
+            JOptionPane.YES_NO_OPTION
+    );
+    return choice == JOptionPane.YES_OPTION;
+}
+
+    // BUY PROPERTY
+    public boolean askBuyProperty(String propertyName, int price) {
+        int choice = JOptionPane.showConfirmDialog(
+                null,
+                "Buy " + propertyName + " for $" + price + "?",
+                "Buy Property",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        return choice == JOptionPane.YES_OPTION;
     }
 
-    // ===== 3. start game =====
-    @FXML
-    public void handleStartGame() {
-        if (playerNames.size() < expectedPlayers) {
-            statusLabel.setText("Not enough players!");
-            return;
-        }
-
-        statusLabel.setText("Game Started!");
-    }
-
-    // ===== 4. roll dice =====
-    @FXML
-    public void handleRollDice() {
-        rollClicked = true;
-        statusLabel.setText("Roll clicked");
-    }
-
-    public boolean isRollClicked() {
-        return rollClicked;
-    }
-
-    public void resetRoll() {
-        rollClicked = false;
-    }
-
-    // ===== 5. buy decision =====
-    @FXML
-    public void handleBuyYes() {
-        buyDecision = true;
-        statusLabel.setText("Chose YES");
-    }
-
-    @FXML
-    public void handleBuyNo() {
-        buyDecision = false;
-        statusLabel.setText("Chose NO");
-    }
-
-    public Boolean getBuyDecision() {
-        return buyDecision;
-    }
-
-    public void resetBuyDecision() {
-        buyDecision = null;
-    }
-
-    // ===== UI UPDATE (file khác gọi) =====
-
-    public void updateCurrentPlayer(String name) {
-        currentPlayerLabel.setText("Current Player: " + name);
-    }
-
-    public void updateDice(int dice) {
-        diceLabel.setText("Dice: " + dice);
-    }
-
-    public void updateStatus(String msg) {
-        statusLabel.setText(msg);
+    // HIỆN THÔNG BÁO GÌ ĐÓ
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
     }
 }
