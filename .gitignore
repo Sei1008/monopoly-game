@@ -15,7 +15,9 @@
 *.vscode
 .DS_Store
 **/.DS_Store
-
+.vscode/
+t.vscode/
+*.code-workspace
 # IDE specific files (Bỏ qua file cấu hình của các phần mềm code)
 .idea/
 .vscode/

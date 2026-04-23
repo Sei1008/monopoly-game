@@ -1,23 +1,10 @@
 package service;
-import config.GameConfig;
-import java.util.ArrayList;
+
 import java.util.List;
-<<<<<<< HEAD
-import model.Board;
-import model.Dice;
-import model.Player;
-
-public class GameService {
-=======
-import model.*;
-
 import model.*;
 import view.GameView;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameService {
-<<<<<<< HEAD
     private Board board;
     private List<Player> players;
     private GameLogic gameLogic;
@@ -125,33 +112,4 @@ public class GameService {
         Player winner = gameLogic.getWinner(players);
         if(winner != null) view.showMessage(winner.getName()+"is winner!");
     }
-=======
->>>>>>> main
-     Board board;
-    List<Player> players = new ArrayList<>();
-    Dice dice;
-    int currentPlayer;
-   public void initGame(GameConfig config) {
-       players = new ArrayList<>();
-        board = new Board();   
-        config.loadConfig();
-        dice= new Dice();
-
-    }
-<<<<<<< HEAD
-    int rollDice(){
-       int step=dice.getTotal();
-       return step;
-       }
-    
-
-    }
-    
-
-
-=======
-    
-
->>>>>>> c88df04 (first commit)
 }
->>>>>>> main
