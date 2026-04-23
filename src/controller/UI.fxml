@@ -1,0 +1,35 @@
+<VBox spacing="15" alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.GameController">
+
+    <!-- SETUP -->
+    <Label text="SETUP GAME"/>
+
+    <TextField fx:id="numPlayersField" promptText="Number of players"/>
+    <Button text="Confirm" onAction="#handleSetPlayers"/>
+
+    <TextField fx:id="playerNameField" promptText="Player name"/>
+    <Button text="Add Player" onAction="#handleAddPlayer"/>
+
+    <ListView fx:id="playerListView" prefHeight="120"/>
+
+    <Button text="Start Game" onAction="#handleStartGame"/>
+
+    <Separator/>
+
+    <!-- GAME -->
+    <Label fx:id="currentPlayerLabel"/>
+
+    <Button text="Roll Dice (OK)" onAction="#handleRollDice"/>
+    <Label fx:id="diceLabel"/>
+
+    <Label text="Buy this property?"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Yes" onAction="#handleBuyYes"/>
+        <Button text="No" onAction="#handleBuyNo"/>
+    </HBox>
+
+    <Label fx:id="statusLabel"/>
+
+</VBox>

@@ -1,9 +1,8 @@
 package service;
 
+import java.util.List;
 import model.*;
 import view.GameView;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameService {
     private Board board;
