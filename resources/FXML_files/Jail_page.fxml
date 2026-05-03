@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="200" prefWidth="500" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML_Controllers.Jail_page">
+    <children>
+        <ImageView fitHeight="200" fitWidth="500" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="false">
+            <image><Image url="@../images/backgroundPopUp_Jail.png" /></image>
+        </ImageView>
+        <Label fx:id="PopUp_Label" layoutX="50" layoutY="50" prefHeight="60" prefWidth="400" textAlignment="CENTER" wrapText="true">
+            <font><Font name="Berlin Sans FB" size="22" /></font>
+        </Label>
+        <!-- Shown when landing on JAIL square (visiting) -->
+        <Button fx:id="Button_Yes" layoutX="150" layoutY="140" prefHeight="30" prefWidth="80" text="Pay $50" textFill="BLACK"
+                onMouseClicked="#Click_On_Yes">
+            <style>-fx-background-color: #00c800;</style>
+            <font><Font name="Berlin Sans FB Demi Bold" size="16" /></font>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </Button>
+        <Button fx:id="Button_No" layoutX="270" layoutY="140" prefHeight="30" prefWidth="80" text="Stay" textFill="BLACK"
+                onMouseClicked="#Click_ON_NO">
+            <style>-fx-background-color: #ff4444;</style>
+            <font><Font name="Berlin Sans FB Demi Bold" size="16" /></font>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </Button>
+        <!-- Shown when sent to jail (GO_JAIL) -->
+        <Button fx:id="Button_OK" layoutX="200" layoutY="140" prefHeight="30" prefWidth="80" text="OK" textFill="BLACK"
+                onMouseClicked="#Click_On_OK">
+            <style>-fx-background-color: #f6ff00;</style>
+            <font><Font name="Berlin Sans FB Demi Bold" size="16" /></font>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </Button>
+    </children>
+</AnchorPane>
