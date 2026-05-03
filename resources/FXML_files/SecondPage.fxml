@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SecondPage">
+
+    <!-- Board background -->
+    <ImageView fx:id="boardImageView" fitHeight="970" fitWidth="1440" layoutX="240" layoutY="110" onMouseClicked="#Click_On_Arena" pickOnBounds="true" preserveRatio="false">
+        <image><Image url="@../images/board.png" /></image>
+    </ImageView>
+
+    <!-- Top bar -->
+    <ImageView fx:id="topBar" fitHeight="110" fitWidth="1440" layoutX="240" layoutY="0" onMouseClicked="#Click_On_Arena" pickOnBounds="true" preserveRatio="false">
+        <image><Image url="@../images/separatedBar.png" /></image>
+    </ImageView>
+
+    <!-- Bottom bar -->
+    <ImageView fx:id="bottomBar" fitHeight="60" fitWidth="1440" layoutX="351.0" layoutY="1080.0" pickOnBounds="true" preserveRatio="false" rotate="180">
+        <image><Image url="@../images/separatedBar.png" /></image>
+    </ImageView>
+
+    <!-- Player 1 (đỏ) -->
+    <Label fx:id="Label_player1" layoutX="255" layoutY="8" onMouseClicked="#Click_On_Player1" text="Player 1" textFill="#ff1e00">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player1" layoutX="248" layoutY="30" text="Amount :" textFill="#ff1e00" />
+    <Label fx:id="Label_player1_Amount" layoutX="315" layoutY="30" text="1500 $" textFill="#ff1e00" />
+    <TextField fx:id="textfield_player1" layoutX="250" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player1_symbol" fitHeight="38" fitWidth="38" layoutX="250" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player1" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_1.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_1" fitHeight="38" fitWidth="31" layoutX="295" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+    <Line fx:id="Line_Player1" endX="-9" endY="28" layoutX="380" layoutY="69" startX="-9" startY="-58" />
+
+    <!-- Player 2 (xanh lá) -->
+    <Label fx:id="Label_player2" layoutX="435" layoutY="8" onMouseClicked="#Click_On_Player2" text="Player 2" textFill="#048a1f">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player2" layoutX="428" layoutY="30" text="Amount :" textFill="#048a1f" />
+    <Label fx:id="Label_player2_Amount" layoutX="495" layoutY="30" text="1500 $" textFill="#048a1f" />
+    <TextField fx:id="textfield_player2" layoutX="430" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player2_symbol" fitHeight="38" fitWidth="38" layoutX="430" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player2" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_2.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_2" fitHeight="38" fitWidth="31" layoutX="475" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+    <Line fx:id="Line_Player2" endX="-9" endY="28" layoutX="560" layoutY="69" startX="-9" startY="-58" />
+
+    <!-- Player 3 (xanh dương) -->
+    <Label fx:id="Label_player3" layoutX="615" layoutY="8" onMouseClicked="#Click_On_Player3" text="Player 3" textFill="#0d00ff">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player3" layoutX="608" layoutY="30" text="Amount :" textFill="#0d00ff" />
+    <Label fx:id="Label_player3_Amount" layoutX="675" layoutY="30" text="1500 $" textFill="#0d00ff" />
+    <TextField fx:id="textfield_player3" layoutX="610" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player3_symbol" fitHeight="38" fitWidth="38" layoutX="610" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player3" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_3.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_3" fitHeight="38" fitWidth="31" layoutX="655" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+    <Line fx:id="Line_Player3" endX="-9" endY="28" layoutX="740" layoutY="69" startX="-9" startY="-58" />
+
+    <!-- Player 4 (tím) -->
+    <Label fx:id="Label_player4" layoutX="795" layoutY="8" onMouseClicked="#Click_On_Player4" text="Player 4" textFill="#ed00ff">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player4" layoutX="788" layoutY="30" text="Amount :" textFill="#ed00ff" />
+    <Label fx:id="Label_player4_Amount" layoutX="855" layoutY="30" text="1500 $" textFill="#ed00ff" />
+    <TextField fx:id="textfield_player4" layoutX="790" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player4_symbol" fitHeight="38" fitWidth="38" layoutX="790" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player4" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_4.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_4" fitHeight="38" fitWidth="31" layoutX="835" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+    <Line fx:id="Line_Player4" endX="-9" endY="28" layoutX="920" layoutY="69" startX="-9" startY="-58" />
+
+    <!-- Player 5 (trắng) -->
+    <Label fx:id="Label_player5" layoutX="975" layoutY="8" onMouseClicked="#Click_On_Player5" text="Player 5" textFill="WHITE">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player5" layoutX="968" layoutY="30" text="Amount :" textFill="WHITE" />
+    <Label fx:id="Label_player5_Amount" layoutX="1035" layoutY="30" text="1500 $" textFill="WHITE" />
+    <TextField fx:id="textfield_player5" layoutX="970" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player5_symbol" fitHeight="38" fitWidth="38" layoutX="970" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player5" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_5.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_5" fitHeight="38" fitWidth="31" layoutX="1015" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+    <Line fx:id="Line_Player5" endX="-9" endY="28" layoutX="1100" layoutY="69" startX="-9" startY="-58" />
+
+    <!-- Player 6 (xanh ngọc) -->
+    <Label fx:id="Label_player6" layoutX="1155" layoutY="8" onMouseClicked="#Click_On_Player6" text="Player 6" textFill="#3abcb5">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player6" layoutX="1148" layoutY="30" text="Amount :" textFill="#3abcb5" />
+    <Label fx:id="Label_player6_Amount" layoutX="1215" layoutY="30" text="1500 $" textFill="#3abcb5" />
+    <TextField fx:id="textfield_player6" layoutX="1150" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player6_symbol" fitHeight="38" fitWidth="38" layoutX="1150" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player6" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_6.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_6" fitHeight="38" fitWidth="31" layoutX="1195" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+    <Line fx:id="Line_Player6" endX="-9" endY="28" layoutX="1280" layoutY="69" startX="-9" startY="-58" />
+
+    <!-- Player 7 (hồng) -->
+    <Label fx:id="Label_player7" layoutX="1335" layoutY="8" onMouseClicked="#Click_On_Player7" text="Player 7" textFill="#fa0095">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player7" layoutX="1328" layoutY="30" text="Amount :" textFill="#fa0095" />
+    <Label fx:id="Label_player7_Amount" layoutX="1395" layoutY="30" text="1500 $" textFill="#fa0095" />
+    <TextField fx:id="textfield_player7" layoutX="1330" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player7_symbol" fitHeight="38" fitWidth="38" layoutX="1330" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player7" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_7.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_7" fitHeight="38" fitWidth="31" layoutX="1375" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+    <Line fx:id="Line_Player7" endX="-9" endY="28" layoutX="1460" layoutY="69" startX="-9" startY="-58" />
+
+    <!-- Player 8 (cam) -->
+    <Label fx:id="Label_player8" layoutX="1515" layoutY="8" onMouseClicked="#Click_On_Player8" text="Player 8" textFill="#ff9000">
+        <cursor><Cursor fx:constant="TEXT" /></cursor>
+    </Label>
+    <Label fx:id="Label_Amount_player8" layoutX="1508" layoutY="30" text="Amount :" textFill="#ff9000" />
+    <Label fx:id="Label_player8_Amount" layoutX="1575" layoutY="30" text="1500 $" textFill="#ff9000" />
+    <TextField fx:id="textfield_player8" layoutX="1510" layoutY="5" prefHeight="21" prefWidth="120" visible="false" />
+    <ImageView fx:id="Player8_symbol" fitHeight="38" fitWidth="38" layoutX="1510" layoutY="62" onMouseClicked="#Click_ON_Symbol_Player8" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/Player_8.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Arrow_8" fitHeight="38" fitWidth="31" layoutX="1555" layoutY="62" preserveRatio="true">
+        <image><Image url="@../images/arrow.png" /></image>
+    </ImageView>
+
+    <!-- Dice -->
+    <ImageView fx:id="Dice_var1" fitHeight="116" fitWidth="92" layoutX="960" layoutY="500" onMouseClicked="#Click_Dice_1" pickOnBounds="true" preserveRatio="true">
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Dice_var2" fitHeight="116" fitWidth="92" layoutX="820" layoutY="500" onMouseClicked="#Click_Dice_2" pickOnBounds="true" preserveRatio="true">
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <ImageView fx:id="Dice1" fitHeight="116" fitWidth="92" visible="false">
+        <image><Image url="@../images/Dice1.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Dice2" fitHeight="116" fitWidth="92" visible="false">
+        <image><Image url="@../images/Dice2.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Dice3" fitHeight="116" fitWidth="92" visible="false">
+        <image><Image url="@../images/Dice3.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Dice4" fitHeight="116" fitWidth="92" visible="false">
+        <image><Image url="@../images/Dice4.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Dice5" fitHeight="116" fitWidth="92" visible="false">
+        <image><Image url="@../images/Dice5.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Dice6" fitHeight="116" fitWidth="92" visible="false">
+        <image><Image url="@../images/Dice6.png" /></image>
+    </ImageView>
+
+    <!-- Dominos -->
+    <ImageView fx:id="Domino_1" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_1.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Domino_2" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_2.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Domino_3" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_3.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Domino_4" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_4.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Domino_5" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_5.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Domino_6" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_6.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Domino_7" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_7.png" /></image>
+    </ImageView>
+    <ImageView fx:id="Domino_8" fitHeight="54" fitWidth="53" layoutX="0" layoutY="0" preserveRatio="true" visible="false">
+        <image><Image url="@../images/Player_8.png" /></image>
+    </ImageView>
+
+    <!-- Owned areas -->
+    <ImageView fx:id="Area_2" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_4" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_7" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_9" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_10" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_12" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_14" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_15" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_17" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_19" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_20" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_22" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_24" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_25" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_27" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_28" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_30" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_32" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_33" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_35" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_38" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_40" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+
+    <!-- Additional Property Areas -->
+    <ImageView fx:id="Area_5" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_6" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_8" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_11" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_13" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_16" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_18" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_21" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_23" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_26" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_29" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Area_31" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_34" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_37" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Area_39" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+
+    <!-- House building -->
+    <ImageView fx:id="House_1" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_2" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_3" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_4" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_5" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_6" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_7" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_8" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_9" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_10" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_11" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_12" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_13" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_14" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_15" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_16" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_17" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_18" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_19" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_20" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_21" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_22" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_23" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_24" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_25" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_26" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_27" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_28" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_29" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_30" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="House_31" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_32" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_33" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_34" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_35" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_36" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_37" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_38" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_39" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="House_40" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+
+    <!-- Hotel building -->
+    <ImageView fx:id="Hotel_1" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_2" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_3" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_4" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_5" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_6" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_7" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_8" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_9" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_10" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_11" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_12" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_13" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_14" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_15" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_16" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_17" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_18" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_19" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_20" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_21" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_22" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_23" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_24" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_25" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_26" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_27" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_28" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_29" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_30" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleX="1.25" scaleY="0.6" visible="false" />
+    <ImageView fx:id="Hotel_31" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_32" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_33" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_34" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_35" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_36" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_37" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_38" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_39" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+    <ImageView fx:id="Hotel_40" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
+
+    <!-- ===== BOTTOM NAV ===== -->
+    <ImageView fitHeight="40" fitWidth="53" layoutX="1004.0" layoutY="1094.0" onMouseClicked="#Click_On_Back" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/back_SecondPage.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <Label layoutX="1057.0" layoutY="1097.0" text="Back" textFill="#18acdd">
+        <font><Font name="Calibri Bold" size="23" /></font>
+    </Label>
+
+    <ImageView fitHeight="40" fitWidth="31" layoutX="1180.0" layoutY="1094.0" onMouseClicked="#Click_On_Quit" pickOnBounds="true" preserveRatio="true">
+        <image><Image url="@../images/quit_SecondPage.png" /></image>
+        <cursor><Cursor fx:constant="HAND" /></cursor>
+    </ImageView>
+    <Label layoutX="1215.0" layoutY="1097.0" text="Quit" textFill="#ff8a00">
+        <font><Font name="Calibri Bold" size="23" /></font>
+    </Label>
+
+</AnchorPane>
