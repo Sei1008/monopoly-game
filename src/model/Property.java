@@ -1,5 +1,5 @@
 package model;
-import utils.Constants;
+import config.Constants;
 public class Property {
     private String name;
     private int price;
