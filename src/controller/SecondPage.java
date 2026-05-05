@@ -40,7 +40,7 @@ import model.Player;
 import model.Property;
 import model.Square;
 import model.SquareType;
-import utils.Constants;
+import config.Constants;
 import FXML_Controllers.PoPupPage;
 import FXML_Controllers.Chance_page;
 

@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
 import model.PlayerArea;
-import utils.Constants;
+import config.Constants;
 
 public class Jail_page extends Main implements Initializable {
 
