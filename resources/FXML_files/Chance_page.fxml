@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="200" prefWidth="500" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML_Controllers.Chance_page">
+    <children>
+        <ImageView fitHeight="200" fitWidth="500" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="false">
+            <image><Image url="@../images/backgroundPopUp_Chance.png" /></image>
+        </ImageView>
+        <Label fx:id="PopUp_Label" layoutX="50" layoutY="60" prefHeight="80" prefWidth="400" textAlignment="CENTER" wrapText="true">
+            <font><Font name="Berlin Sans FB" size="24" /></font>
+        </Label>
+        <Button fx:id="Button_OK" layoutX="200" layoutY="150" prefHeight="30" prefWidth="100" text="OK" textFill="BLACK"
+                onMouseClicked="#Click_On_OK">
+            <style>-fx-background-color: #f6ff00;</style>
+            <font><Font name="Berlin Sans FB Demi Bold" size="16" /></font>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </Button>
+    </children>
+</AnchorPane>

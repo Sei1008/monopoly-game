@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="700" prefWidth="600" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FirstPage">
+
+    <!-- Background -->
+    <ImageView fitHeight="700" fitWidth="600" preserveRatio="false">
+        <image><Image url="@../images/background.png" /></image>
+    </ImageView>
+
+    <!-- Main menu -->
+    <AnchorPane fx:id="mainMenu" prefHeight="700" prefWidth="600">
+
+        <!-- Start -->
+        <ImageView fx:id="image_start" fitHeight="70" fitWidth="250" layoutX="212.0" layoutY="324.0" onMouseClicked="#clicked_Start" onMouseEntered="#hoverButton" onMouseExited="#exitHoverButton" preserveRatio="true">
+            <image><Image url="@../images/start.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Exit -->
+        <ImageView fx:id="image_exit" fitHeight="60" fitWidth="210" layoutX="239.0" layoutY="375.0" onMouseClicked="#exitGame" onMouseEntered="#hoverButton" onMouseExited="#exitHoverButton" preserveRatio="true">
+            <image><Image url="@../images/exit.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+    </AnchorPane>
+
+    <!-- Start game -->
+    <AnchorPane fx:id="startPane" prefHeight="700" prefWidth="600" visible="false">
+
+        <!-- Body -->
+        <ImageView fitHeight="490" fitWidth="430" layoutX="86" layoutY="68" preserveRatio="true">
+            <image><Image url="@../images/body.png" /></image>
+        </ImageView>
+
+        <!-- Header -->
+        <ImageView fitHeight="341" fitWidth="430" layoutX="85" layoutY="105" preserveRatio="false">
+            <image><Image url="@../images/header.png" /></image>
+        </ImageView>
+
+        <!-- Number of players label -->
+        <ImageView fitHeight="50" fitWidth="211" layoutX="200" layoutY="187" preserveRatio="true">
+            <image><Image url="@../images/number_of_players.png" /></image>
+        </ImageView>
+
+        <!-- Player bar -->
+        <ImageView fitHeight="95" fitWidth="278" layoutX="162" layoutY="228" preserveRatio="true">
+            <image><Image url="@../images/player_bar.png" /></image>
+        </ImageView>
+
+        <!-- Player dot 1 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="172.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="1">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Player dot 2 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="210.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="2">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Player dot 3 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="242.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="3">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Player dot 4 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="277.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="4">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Player dot 5 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="314.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="5">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Player dot 6 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="349.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="6">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Player dot 7 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="384.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="7">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Player dot 8 -->
+        <ImageView fitHeight="25" fitWidth="25" layoutX="418.0" layoutY="250.0"
+                   onMouseClicked="#selectPlayer" onMouseEntered="#hoverPlayer" onMouseExited="#exitHoverPlayer"
+                   preserveRatio="true" userData="8">
+            <image><Image url="@../images/player_dot.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- Triangle -->
+        <ImageView fx:id="image_triangle" fitHeight="20" fitWidth="25" layoutX="172" layoutY="235" preserveRatio="true">
+            <image><Image url="@../images/triangle.png" /></image>
+        </ImageView>
+
+        <!-- Amount label -->
+        <ImageView fitHeight="45" fitWidth="140" layoutX="169" layoutY="328" preserveRatio="true">
+            <image><Image url="@../images/amount.png" /></image>
+        </ImageView>
+
+        <!-- Text field -->
+        <TextField fx:id="textfield_amount" layoutX="270" layoutY="333" prefHeight="35" prefWidth="130" promptText="1500" style="-fx-font-size:16; -fx-alignment:center;" />
+
+        <!-- Dollar -->
+        <ImageView fitHeight="36" fitWidth="54" layoutX="388" layoutY="341" preserveRatio="true">
+            <image><Image url="@../images/dollar.png" /></image>
+        </ImageView>
+
+        <!-- BACK BUTTON -->
+        <ImageView fitHeight="50" fitWidth="130" layoutX="170" layoutY="382" onMouseClicked="#backToMenu" onMouseEntered="#hoverButton" onMouseExited="#exitHoverButton" preserveRatio="true">
+            <image><Image url="@../images/back.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+        <!-- New button -->
+        <ImageView fitHeight="50" fitWidth="130" layoutX="322" layoutY="382" onMouseClicked="#ClickedOnnew" onMouseEntered="#hoverButton" onMouseExited="#exitHoverButton" preserveRatio="true">
+            <image><Image url="@../images/new.png" /></image>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </ImageView>
+
+    </AnchorPane>
+
+</AnchorPane>

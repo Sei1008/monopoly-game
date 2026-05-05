@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="220" prefWidth="500"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="FXML_Controllers.PoPupPage">
+    <children>
+        <!-- Background -->
+        <ImageView fitHeight="220" fitWidth="500" layoutX="0" layoutY="0"
+                   pickOnBounds="true" preserveRatio="false">
+            <image><Image url="@../images/backgroundPopUp.png" /></image>
+        </ImageView>
+
+        <!-- Offer icon centered -->
+        <ImageView fitHeight="60" fitWidth="60" layoutX="220" layoutY="10"
+                   pickOnBounds="true" preserveRatio="true">
+            <image><Image url="@../images/Offer.png" /></image>
+        </ImageView>
+
+        <!-- Label centered -->
+        <Label fx:id="PopUp_Label"
+               layoutX="0" layoutY="75"
+               prefWidth="500" prefHeight="80"
+               alignment="CENTER"
+               textAlignment="CENTER"
+               wrapText="true">
+            <font><Font name="Berlin Sans FB" size="22" /></font>
+        </Label>
+
+        <!-- Yes Button -->
+        <Button fx:id="Button_Yes" layoutX="120" layoutY="170"
+                prefHeight="35" prefWidth="100" text="Yes" textFill="BLACK"
+                onMouseClicked="#Click_On_Yes">
+            <style>-fx-background-color: #00c800; -fx-background-radius: 8;</style>
+            <font><Font name="Berlin Sans FB Demi Bold" size="16" /></font>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </Button>
+
+        <!-- No Button -->
+        <Button fx:id="Button_No" layoutX="280" layoutY="170"
+                prefHeight="35" prefWidth="100" text="No" textFill="WHITE"
+                onMouseClicked="#Click_ON_NO">
+            <style>-fx-background-color: #ff4444; -fx-background-radius: 8;</style>
+            <font><Font name="Berlin Sans FB Demi Bold" size="16" /></font>
+            <cursor><Cursor fx:constant="HAND" /></cursor>
+        </Button>
+    </children>
+</AnchorPane>
