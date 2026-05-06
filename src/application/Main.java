@@ -20,19 +20,19 @@ import java.util.ArrayList;
 
 public class Main extends Application {
 
-    // ===== SHARED GAME STATE =====
+    //SHARED GAME STATE
     public static Label Static_PopUp_Label;
     public static int player_turn = 1;              // 1-8
     public static int static_player_place = 0;     // 1-40
     public static Property currentProperty;
     public static int freeParkingPool = 0;
 
-    // ===== IMAGE VIEW ARRAYS FOR BUILDINGS =====
+    //IMAGE VIEW ARRAYS FOR BUILDINGS
     public static ImageView[] images_owned_buildings = new ImageView[41];
     public static ImageView[] images_house_buildings = new ImageView[41];
     public static ImageView[] images_hotel_buildings = new ImageView[41];
 
-    // ===== PLAYER AREAS =====
+    //PLAYER AREAS
     public static PlayerArea Gamer1;
     public static PlayerArea Gamer2;
     public static PlayerArea Gamer3;
