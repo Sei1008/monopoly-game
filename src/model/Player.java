@@ -71,12 +71,10 @@ public class Player {
     }
     public boolean UseJailFreeCard(){
         if(hasJailFreeCard()){
-            getOutOfJailCard--;
+            getOutOfJailCard--;          
             setInJail(false);
-            System.out.println(getName() + "used a 'get Out of Jail Free' card! Cards remaining: " + getOutOfJailCard);
             return true;
         }
-        System.out.println(getName() + "does not have 'get Out of Jail Free' card");
         return false;
     }
 }

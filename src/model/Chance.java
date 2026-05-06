@@ -46,10 +46,12 @@ public class Chance {
     }
 public int drawCard(){
     int topCard = deck.poll();
-    deck.add(topCard);
+    if (topCard != 8){
+        deck.add(topCard);
+    }
     lastDrawnCardID = topCard;
     return topCard;
-}
+    }
     public String getCardDescription() {
         return chanceCards.get(lastDrawnCardID);
     }
@@ -61,7 +63,6 @@ public int drawCard(){
         // If target position is less than current position, player passed GO
         if (targetPosition < currentPos) {
             player.addMoney(200);
-            System.out.println(player.getName() + " passed GO -> Received $200");
         }
     }
 
@@ -97,121 +98,90 @@ public int drawCard(){
         switch (cardID) {
             case 0: // Advance to Boardwalk
                 moveTo(player,39);
-                System.out.println(player.getName() + " advances to Boardwalk.");
                 break;
 
             case 1: // Advance to Go (Collect $200)
                 player.setPosition(0);
                 player.addMoney(200);
-                System.out.println(player.getName() + " advances to GO and collects $200.");
                 break;
 
             case 2: // Advance to Illinois Avenue
                 moveTo(player, 24);
-                System.out.println(player.getName() + " advances to Illinois Avenue.");
                 break;
 
             case 3: // Advance to St. Charles Place
-                moveTo(player, 11);
-                System.out.println(player.getName() + " advances to St. Charles Place.");
+                moveTo(player, 11);;
                 break;
 
             case 4: // case 4 = case 5
             case 5: // Advance to nearest Railroad
                 int nearestRR = findNearestRailroad(player.getPosition());
                 moveTo(player, nearestRR);
-                System.out.println(player.getName() + " advances to the nearest Railroad.");
                 
                 Property rrProperty = board.getSquare(nearestRR).getProperty();
-                if (!rrProperty.isOwned()) {
-                    System.out.println("This Railroad is unowned. You may buy it from the Bank for $" + rrProperty.getPrice());
-                } else {
+                if (rrProperty.isOwned()) {
                     int doublRent = rrProperty.getRent() * 2;
                     Player owner = rrProperty.getOwner();
                     player.deductMoney(doublRent);
                     owner.addMoney(doublRent);
-                    System.out.println(player.getName() + " pays " + owner.getName() + " $" + doublRent + " (double rent).");
                 }
                 break;
 
             case 6: // Advance to nearest Utility
                 int nearestUtil = findNearestUtility(player.getPosition());
                 moveTo(player, nearestUtil);
-                System.out.println(player.getName() + " advances to the nearest Utility.");
                 
                 Property utilProperty = board.getSquare(nearestUtil).getProperty();
-                if (!utilProperty.isOwned()) {
-                    System.out.println("This Utility is unowned. You may buy it from the Bank for $" + utilProperty.getPrice());
-                } else {
+                if (utilProperty.isOwned()) {
                     dice.roll();
                     int diceTotal = dice.getTotal();
                     int utilityRent = diceTotal * 10;
                     Player owner = utilProperty.getOwner();
                     player.deductMoney(utilityRent);
                     owner.addMoney(utilityRent);
-                    System.out.println(player.getName() + " rolled " + diceTotal + " and pays " + owner.getName() + " $" + utilityRent);
                 }
                 break;
 
             case 7: // Bank pays dividend of $50
                 player.addMoney(50);
-                System.out.println("Bank pays " + player.getName() + " dividend of $50.");
                 break;
 
             case 8: // Get Out of Jail Free
-                System.out.println(player.getName() + " gets a Get Out of Jail Free card!");
                 player.addJailFreeCard();
                 break;
 
             case 9: // Go Back 3 Spaces
                 int backPosition = (player.getPosition() - 3 + 40) % 40;
                 player.setPosition(backPosition);
-                System.out.println(player.getName() + " goes back 3 spaces to position " + backPosition);
                 // Handle the square they land on
                 break;
 
             case 10: // Go to Jail
                 player.setPosition(10);
                 player.setInJail(true);
-                System.out.println(player.getName() + " goes to Jail!");
                 break;
 
             case 11: // Make general repairs
                 int totalRepairCost = 0;
-                int totalHouses = 0;
-                int totalHotels = 0;
-    
+
                 for (Property prop : player.getProperties()) {
-                totalHouses += prop.getHouses();
-                totalHotels += prop.getHotels();
                 totalRepairCost += prop.getRepairCost();
             }
                 player.deductMoney(totalRepairCost);
-                System.out.println(player.getName() + " makes general repairs:");
-                System.out.println("  - Houses repaired: " + totalHouses + " x $25 = $" + (totalHouses * 25));
-                System.out.println("  - Hotels repaired: " + totalHotels + " x $100 = $" + (totalHotels * 100));
-                System.out.println("  - Total repair cost: $" + totalRepairCost);
-                System.out.println("  - New balance: $" + player.getMoney());
                 break;
 
             case 12: // Speeding fine $15
                 player.deductMoney(15);
-                System.out.println(player.getName() + " pays speeding fine of $15.");
                 break;
 
             case 13: // Take a trip to Reading Railroad
                 moveTo(player, 5);
-                System.out.println(player.getName() + " takes a trip to Reading Railroad.");
-                
                 Property readingRR = board.getSquare(5).getProperty();
-                if (!readingRR.isOwned()) {
-                    System.out.println("Reading Railroad is unowned. You may buy it from the Bank for $" + readingRR.getPrice());
-                } else {
+                if (readingRR.isOwned()) {
                     int rent = readingRR.getRent();
                     Player owner = readingRR.getOwner();
                     player.deductMoney(rent);
                     owner.addMoney(rent);
-                    System.out.println(player.getName() + " pays " + owner.getName() + " $" + rent);
                 }
                 break;
 
@@ -220,14 +190,12 @@ public int drawCard(){
                     if (!otherPlayer.equals(player)) {
                         player.deductMoney(50);
                         otherPlayer.addMoney(50);
-                        System.out.println(player.getName() + " pays " + otherPlayer.getName() + " $50.");
                     }
                 }
                 break;
 
             case 15: // Building loan matures - Collect $150
                 player.addMoney(150);
-                System.out.println("Your building loan matures. " + player.getName() + " collects $150.");
                 break;
 
             default:
