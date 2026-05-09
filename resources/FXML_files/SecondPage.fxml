@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SecondPage">
+<AnchorPane fx:id="rootPane" prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SecondPage">
 
     <!-- Board background -->
     <ImageView fx:id="boardImageView" fitHeight="970" fitWidth="1440" layoutX="240" layoutY="110" onMouseClicked="#Click_On_Arena" pickOnBounds="true" preserveRatio="false">
@@ -20,7 +21,7 @@
     </ImageView>
 
     <!-- Bottom bar -->
-    <ImageView fx:id="bottomBar" fitHeight="60" fitWidth="1440" layoutX="351.0" layoutY="1080.0" pickOnBounds="true" preserveRatio="false" rotate="180">
+    <ImageView fx:id="bottomBar" fitHeight="60" fitWidth="1440" layoutX="240" layoutY="1020" pickOnBounds="true" preserveRatio="false" rotate="180" visible="false">
         <image><Image url="@../images/separatedBar.png" /></image>
     </ImageView>
 
@@ -328,21 +329,9 @@
     <ImageView fx:id="Hotel_39" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
     <ImageView fx:id="Hotel_40" fitHeight="69" fitWidth="92" layoutX="0" layoutY="0" preserveRatio="true" scaleY="0.92" visible="false" />
 
-    <!-- ===== BOTTOM NAV ===== -->
-    <ImageView fitHeight="40" fitWidth="53" layoutX="1004.0" layoutY="1094.0" onMouseClicked="#Click_On_Back" pickOnBounds="true" preserveRatio="true">
-        <image><Image url="@../images/back_SecondPage.png" /></image>
-        <cursor><Cursor fx:constant="HAND" /></cursor>
-    </ImageView>
-    <Label layoutX="1057.0" layoutY="1097.0" text="Back" textFill="#18acdd">
-        <font><Font name="Calibri Bold" size="23" /></font>
-    </Label>
-
-    <ImageView fitHeight="40" fitWidth="31" layoutX="1180.0" layoutY="1094.0" onMouseClicked="#Click_On_Quit" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="40" fitWidth="31" layoutX="1637.0" layoutY="65.0" onMouseClicked="#Click_On_Quit" pickOnBounds="true" preserveRatio="true">
         <image><Image url="@../images/quit_SecondPage.png" /></image>
         <cursor><Cursor fx:constant="HAND" /></cursor>
     </ImageView>
-    <Label layoutX="1215.0" layoutY="1097.0" text="Quit" textFill="#ff8a00">
-        <font><Font name="Calibri Bold" size="23" /></font>
-    </Label>
 
 </AnchorPane>
