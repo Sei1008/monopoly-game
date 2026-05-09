@@ -19,8 +19,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -42,6 +44,16 @@ import model.Square;
 import config.Constants;
 
 public class SecondPage implements Initializable {
+
+    // Root pane (for scaling)
+    @FXML private AnchorPane rootPane;
+
+    // Design resolution - layout gốc thiết kế cho 1920x1080
+    private static final double DESIGN_WIDTH  = 1920.0;
+    private static final double DESIGN_HEIGHT = 1080.0;
+
+    // Hệ số scale tính theo màn hình thực tế
+    private double uiScale = 1.0;
 
     // Board
     @FXML private ImageView boardImageView;
@@ -126,6 +138,35 @@ public class SecondPage implements Initializable {
     // Init
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // ── Scale toàn bộ UI theo màn hình thực tế ──────────────────────────
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double screenWidth  = screenBounds.getWidth();
+        double screenHeight = screenBounds.getHeight();
+
+        // Chọn hệ số scale nhỏ hơn để đảm bảo vừa cả chiều ngang lẫn dọc
+        double scaleX = screenWidth  / DESIGN_WIDTH;
+        double scaleY = screenHeight / DESIGN_HEIGHT;
+        uiScale = Math.min(scaleX, scaleY);
+
+        // Áp dụng Scale transform lên rootPane (pivot = góc trên trái)
+        Scale scale = new Scale(uiScale, uiScale, 0, 0);
+        rootPane.getTransforms().add(scale);
+
+        // Ep kich thuoc sau scale -> xoa vung trang/den thua
+        double scaledW = DESIGN_WIDTH  * uiScale;
+        double scaledH = DESIGN_HEIGHT * uiScale;
+        rootPane.setPrefWidth(scaledW);
+        rootPane.setPrefHeight(scaledH);
+        rootPane.setMaxWidth(scaledW);
+        rootPane.setMaxHeight(scaledH);
+        rootPane.setMinWidth(scaledW);
+        rootPane.setMinHeight(scaledH);
+        // Clip cat phan ve tran ra ngoai
+        javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle(DESIGN_WIDTH, DESIGN_HEIGHT);
+        rootPane.setClip(clip);
+        // Đặt background đen cho rootPane để không lộ viền trắng
+        rootPane.setStyle("-fx-background-color: black;");
+
         numberOfPlayers = FirstPage.numberOfPlayers;
         startMoney = FirstPage.startMoney;
         player_loop = 0;
@@ -138,9 +179,7 @@ public class SecondPage implements Initializable {
         topBar.setFitWidth(1440);
         topBar.setLayoutX(240);
 
-        bottomBar.setFitWidth(1440);
-        bottomBar.setLayoutX(240);
-        bottomBar.setLayoutY(1080);
+        bottomBar.setVisible(false);  // ẩn bottomBar, không chiếm chỗ board
 
         loadOwnedImages();
         setupBoardPositions();

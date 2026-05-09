@@ -8,7 +8,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -97,14 +96,9 @@ public class FirstPage implements Initializable {
         Stage stage = new Stage();
         Rectangle2D screen = Screen.getPrimary().getVisualBounds();
 
-        ScrollPane scrollPane = new ScrollPane(root);
-        scrollPane.setFitToWidth(false);
-        scrollPane.setFitToHeight(false);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setStyle("-fx-background: black; -fx-background-color: black;");
-
-        Scene scene = new Scene(scrollPane, screen.getWidth(), screen.getHeight());
+        // Bỏ ScrollPane — SecondPage tự scale vừa màn hình trong initialize()
+        // Scene size = kích thước màn hình thực tế
+        Scene scene = new Scene(root, screen.getWidth(), screen.getHeight());
         scene.setFill(Color.BLACK);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
