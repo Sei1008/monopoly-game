@@ -1,6 +1,7 @@
 package controller;
 
 import model.PlayerArea;
+import model.CommunityChest;
 import MediaClass.PlayNewMedia;
 import Transitions.DiceTransition;
 import Transitions.DominoTransitions;
@@ -48,11 +49,9 @@ public class SecondPage implements Initializable {
     // Root pane (for scaling)
     @FXML private AnchorPane rootPane;
 
-    // Design resolution - layout gốc thiết kế cho 1920x1080
     private static final double DESIGN_WIDTH  = 1920.0;
     private static final double DESIGN_HEIGHT = 1080.0;
 
-    // Hệ số scale tính theo màn hình thực tế
     private double uiScale = 1.0;
 
     // Board
@@ -120,6 +119,7 @@ public class SecondPage implements Initializable {
     private PlayNewMedia footstepPlayer;
     private Board board;
     private Chance chance;
+    private CommunityChest communityChest;
     private Dice dice;
 
     private final PlayerArea[] gamers = new PlayerArea[9];
@@ -138,33 +138,25 @@ public class SecondPage implements Initializable {
     // Init
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // ── Scale toàn bộ UI theo màn hình thực tế ──────────────────────────
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         double screenWidth  = screenBounds.getWidth();
         double screenHeight = screenBounds.getHeight();
 
-        // Chọn hệ số scale nhỏ hơn để đảm bảo vừa cả chiều ngang lẫn dọc
         double scaleX = screenWidth  / DESIGN_WIDTH;
         double scaleY = screenHeight / DESIGN_HEIGHT;
         uiScale = Math.min(scaleX, scaleY);
 
-        // Áp dụng Scale transform lên rootPane (pivot = góc trên trái)
         Scale scale = new Scale(uiScale, uiScale, 0, 0);
         rootPane.getTransforms().add(scale);
 
-        // Ep kich thuoc sau scale -> xoa vung trang/den thua
         double scaledW = DESIGN_WIDTH  * uiScale;
         double scaledH = DESIGN_HEIGHT * uiScale;
-        rootPane.setPrefWidth(scaledW);
-        rootPane.setPrefHeight(scaledH);
-        rootPane.setMaxWidth(scaledW);
-        rootPane.setMaxHeight(scaledH);
-        rootPane.setMinWidth(scaledW);
-        rootPane.setMinHeight(scaledH);
-        // Clip cat phan ve tran ra ngoai
+        rootPane.setPrefWidth(scaledW);   rootPane.setPrefHeight(scaledH);
+        rootPane.setMaxWidth(scaledW);    rootPane.setMaxHeight(scaledH);
+        rootPane.setMinWidth(scaledW);    rootPane.setMinHeight(scaledH);
+
         javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle(DESIGN_WIDTH, DESIGN_HEIGHT);
         rootPane.setClip(clip);
-        // Đặt background đen cho rootPane để không lộ viền trắng
         rootPane.setStyle("-fx-background-color: black;");
 
         numberOfPlayers = FirstPage.numberOfPlayers;
@@ -179,7 +171,7 @@ public class SecondPage implements Initializable {
         topBar.setFitWidth(1440);
         topBar.setLayoutX(240);
 
-        bottomBar.setVisible(false);  // ẩn bottomBar, không chiếm chỗ board
+        bottomBar.setVisible(false);
 
         loadOwnedImages();
         setupBoardPositions();
@@ -190,6 +182,7 @@ public class SecondPage implements Initializable {
 
         board = new Board();
         chance = new Chance();
+        communityChest = new CommunityChest();
         dice = new Dice();
 
         for (int i = 0; i <= 40; i++) {
@@ -203,24 +196,18 @@ public class SecondPage implements Initializable {
 
             ImageView house = getHouse(i);
             if (house != null) {
-                house.setFitWidth(40);
-                house.setFitHeight(30);
+                house.setFitWidth(40); house.setFitHeight(30);
                 house.setPreserveRatio(true);
-                house.setScaleX(1.0);
-                house.setScaleY(1.0);
-                house.setLayoutX(boardX[i] + 7);
-                house.setLayoutY(boardY[i] + 12);
+                house.setScaleX(1.0); house.setScaleY(1.0);
+                house.setLayoutX(boardX[i] + 7); house.setLayoutY(boardY[i] + 12);
             }
 
             ImageView hotel = getHotel(i);
             if (hotel != null) {
-                hotel.setFitWidth(40);
-                hotel.setFitHeight(30);
+                hotel.setFitWidth(40); hotel.setFitHeight(30);
                 hotel.setPreserveRatio(true);
-                hotel.setScaleX(1.0);
-                hotel.setScaleY(1.0);
-                hotel.setLayoutX(boardX[i] + 7);
-                hotel.setLayoutY(boardY[i] + 12);
+                hotel.setScaleX(1.0); hotel.setScaleY(1.0);
+                hotel.setLayoutX(boardX[i] + 7); hotel.setLayoutY(boardY[i] + 12);
             }
         }
 
@@ -244,10 +231,8 @@ public class SecondPage implements Initializable {
 
         Dice_var1.setImage(getDiceImage((int)(Math.random() * 6) + 1));
         Dice_var2.setImage(getDiceImage((int)(Math.random() * 6) + 1));
-        Dice_var1.setLayoutX(960);
-        Dice_var1.setLayoutY(500);
-        Dice_var2.setLayoutX(820);
-        Dice_var2.setLayoutY(500);
+        Dice_var1.setLayoutX(960); Dice_var1.setLayoutY(500);
+        Dice_var2.setLayoutX(820); Dice_var2.setLayoutY(500);
     }
 
     // Load owned images
@@ -319,7 +304,7 @@ public class SecondPage implements Initializable {
         boardX[40]= boardOffsetX+938*sX-dominoW;   boardY[40]= boardOffsetY+620*sY-dominoH;
     }
 
-    // arrows
+    // Arrows
     void setupArrows() {
         for (int i = 1; i <= 8; i++) getArrow(i).setVisible(false);
         setActiveArrow(currentPlayerIndex());
@@ -369,16 +354,58 @@ public class SecondPage implements Initializable {
         if (hasRolled) return;
         hasRolled = true;
         diceClickCount = (diceClickCount % 10) + 1;
+
         int result1 = (int)(Math.random() * 6) + 1;
         int result2 = (int)(Math.random() * 6) + 1;
-        int total = result1 + result2;
+        int total   = result1 + result2;
+        boolean isDoubles = (result1 == result2);
+
+        // Chạy animation dice
         diceTransition = new DiceTransition(Dice_var1, Dice_var2, diceClickCount);
         diceTransition.run();
+
         PauseTransition pause = new PauseTransition(Duration.millis(3000));
         pause.setOnFinished(e -> {
             Dice_var1.setImage(getDiceImage(result1));
             Dice_var2.setImage(getDiceImage(result2));
-            movePlayer(currentPlayerIndex(), total);
+
+            PlayerArea area = getPlayerArea(currentPlayerIndex());
+            Player player   = area.getPlayer();
+
+            if (player.isInJail()) {
+                player.incrementJailTurns(); // tăng số lượt ở tù
+                System.out.println("Player " + currentPlayerIndex()
+                        + " in jail, turn " + player.getJailTurns()
+                        + " | doubles=" + isDoubles);
+
+                if (isDoubles) {
+                    // Tung được đôi → ra tù, di chuyển bình thường
+                    player.setInJail(false);
+                    System.out.println("Doubles! Player " + currentPlayerIndex() + " leaves jail.");
+                    movePlayer(currentPlayerIndex(), total);
+
+                } else if (player.getJailTurns() >= 3) {
+                    // Lần 3 không được đôi → bắt buộc trả $50 rồi di chuyển
+                    player.setMoney(player.getMoney() - Constants.JAIL_FINE);
+                    Main.freeParkingPool += Constants.JAIL_FINE;
+                    area.getLabel_amount().setText(player.getMoney() + " $");
+                    flashLabel(area.getLabel_amount());
+                    player.setInJail(false);
+                    System.out.println("Player " + currentPlayerIndex()
+                            + " forced to pay $50 and leave jail.");
+                    movePlayer(currentPlayerIndex(), total);
+
+                } else {
+                    // Chưa đủ 3 lần, chưa được đôi → ở lại tù, chuyển lượt
+                    System.out.println("Player " + currentPlayerIndex()
+                            + " stays in jail.");
+                    Platform.runLater(() -> nextTurn());
+                }
+
+            } else {
+                // Không ở tù → di chuyển bình thường
+                movePlayer(currentPlayerIndex(), total);
+            }
         });
         pause.play();
     }
@@ -425,7 +452,7 @@ public class SecondPage implements Initializable {
                 area.getPlayer().setPosition(newPos);
                 domino.setLayoutX(boardX[newPos] + offsetX);
                 domino.setLayoutY(boardY[newPos] + offsetY);
-                System.out.println("[DEBUG] Domino layoutX=" + (boardX[newPos]+offsetX) + " layoutY=" + (boardY[newPos]+offsetY) + " for square " + newPos);
+                System.out.println("[DEBUG] Player " + playerIndex + " → square " + newPos);
                 if (footstepPlayer != null) {
                     footstepPlayer.stop(); footstepPlayer.dispose(); footstepPlayer = null;
                 }
@@ -491,15 +518,29 @@ public class SecondPage implements Initializable {
             nextTurn();
 
         } else if (!property.getOwner().equals(currentPlayerObj)) {
-            int rent = property.getRent();
+            // Tính rent theo số nhà / khách sạn
+            int baseRent  = property.getRent();
+            int houses    = property.getHouses();
+            int hotels    = property.getHotels();
+            int rent;
+            if (hotels >= 1) {
+                rent = baseRent * 5;        // khách sạn = 5× rent gốc
+            } else if (houses > 0) {
+                rent = baseRent * houses;   // nhà: nhân theo số nhà
+            } else {
+                rent = baseRent;
+            }
+
             currentArea.getPlayer().setMoney(currentArea.getPlayer().getMoney() - rent);
             currentArea.getLabel_amount().setText(currentArea.getPlayer().getMoney() + " $");
             flashLabel(currentArea.getLabel_amount());
+
             PlayerArea ownerArea = findPlayerAreaByPlayer(property.getOwner());
             if (ownerArea != null) {
                 ownerArea.getPlayer().setMoney(ownerArea.getPlayer().getMoney() + rent);
                 ownerArea.getLabel_amount().setText(ownerArea.getPlayer().getMoney() + " $");
             }
+            System.out.println("Rent paid: $" + rent + " (houses=" + houses + " hotels=" + hotels + ")");
             nextTurn();
         } else {
             nextTurn();
@@ -525,6 +566,8 @@ public class SecondPage implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
             stage.showAndWait();
         } catch (IOException e) { e.printStackTrace(); }
 
@@ -551,38 +594,49 @@ public class SecondPage implements Initializable {
         }
     }
 
-    // Community chest
+    // Community Chest
     void handleCommunityChest(int playerIndex, int position) {
         PlayerArea area = getPlayerArea(playerIndex);
-        java.util.Random rand = new java.util.Random();
-        int card = rand.nextInt(5);
-        String description;
-        switch (card) {
-            case 0:
-                area.getPlayer().setMoney(area.getPlayer().getMoney() + 200);
-                description = "Bank error in your favor.\nCollect $200.";
-                break;
-            case 1:
-                area.getPlayer().setMoney(area.getPlayer().getMoney() + 100);
-                description = "Life insurance matures.\nCollect $100.";
-                break;
-            case 2:
-                area.getPlayer().setMoney(area.getPlayer().getMoney() - 50);
-                Main.freeParkingPool += 50;
-                description = "Doctor's fee.\nPay $50.";
-                break;
-            case 3:
-                area.getPlayer().setMoney(area.getPlayer().getMoney() + 50);
-                description = "From sale of stock.\nCollect $50.";
-                break;
-            default:
-                area.getPlayer().setMoney(area.getPlayer().getMoney() + 20);
-                description = "Beauty contest prize.\nCollect $20.";
-                break;
-        }
+
+        communityChest.drawCard();
+
+        int[] poolRef = { Main.freeParkingPool };
+        communityChest.applyCardEffect(
+                area.getPlayer(), Main.freeParkingPool, getActivePlayers(), poolRef
+        );
+        Main.freeParkingPool = poolRef[0];
+
+        // Cập nhật tiền của người chơi hiện tại
         area.getLabel_amount().setText(area.getPlayer().getMoney() + " $");
         flashLabel(area.getLabel_amount());
-        Main.Static_PopUp_Label.setText(description);
+
+        // Cập nhật tiền các người chơi khác
+        // (vì một số lá bài như Birthday/Opera ảnh hưởng đến nhiều người)
+        for (int i = 1; i <= numberOfPlayers; i++) {
+            if (i != playerIndex && gamers[i] != null) {
+                gamers[i].getLabel_amount().setText(
+                        gamers[i].getPlayer().getMoney() + " $");
+            }
+        }
+
+        // Xử lý các lá bài thay đổi vị trí
+        if (area.getPlayer().isInJail()) {
+            // Lá "Go to Jail": model set position=10 (0-based) → convert sang 11 (1-based)
+            area.getPlayer().setPosition(11);
+            getDomino(playerIndex).setLayoutX(boardX[11]);
+            getDomino(playerIndex).setLayoutY(boardY[11]);
+        } else {
+            int newPos0 = area.getPlayer().getPosition(); // 0-based từ model
+            if (newPos0 == 0) {
+                // Lá "Advance to GO": model set position=0 → 1-based = 1
+                area.getPlayer().setPosition(1);
+                getDomino(playerIndex).setLayoutX(boardX[1]);
+                getDomino(playerIndex).setLayoutY(boardY[1]);
+            }
+        }
+
+        // Set nội dung popup rồi mở
+        Main.Static_PopUp_Label.setText(communityChest.getCardDescription());
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/CommunityChest_page.fxml"));
@@ -591,6 +645,8 @@ public class SecondPage implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
             stage.showAndWait();
         } catch (IOException e) { e.printStackTrace(); }
 
@@ -599,43 +655,80 @@ public class SecondPage implements Initializable {
 
     // Tax
     void handleTax(int playerIndex, int position) {
-
         int taxAmount = (position == 5) ? Constants.INCOME_TAX : Constants.LUXURY_TAX;
         PlayerArea area = getPlayerArea(playerIndex);
         area.getPlayer().setMoney(area.getPlayer().getMoney() - taxAmount);
         area.getLabel_amount().setText(area.getPlayer().getMoney() + " $");
         flashLabel(area.getLabel_amount());
         Main.freeParkingPool += taxAmount;
+        String taxLabel = (position == 5) ? "Income Tax\nPay $" + taxAmount : "Luxury Tax\nPay $" + taxAmount;
+        Main.Static_PopUp_Label.setText(taxLabel);
         System.out.println("Player " + playerIndex + " paid tax $" + taxAmount);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/Tax_page.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
+            stage.showAndWait();
+        } catch (IOException e) { e.printStackTrace(); }
         nextTurn();
     }
 
-    // Jail
+    // Jail — ô thăm tù, không làm gì cả, chuyển lượt
     void handleJail(int playerIndex) {
-        getPlayerArea(playerIndex).getPlayer().setInJail(true);
-        System.out.println("Player " + playerIndex + " is visiting Jail.");
+        System.out.println("Player " + playerIndex + " is just visiting Jail.");
         nextTurn();
     }
 
     // Go to jail
     void handleGoToJail(int playerIndex) {
         PlayerArea area = getPlayerArea(playerIndex);
-        area.getPlayer().setPosition(11); // boardIndex 11 = Jail (1-based)
+        area.getPlayer().setPosition(11);
         area.getPlayer().setInJail(true);
         getDomino(playerIndex).setLayoutX(boardX[11]);
         getDomino(playerIndex).setLayoutY(boardY[11]);
         System.out.println("Player " + playerIndex + " sent to Jail.");
+        Main.Static_PopUp_Label.setText("Go To Jail!");
+        Main.static_player_place = 30; // GO_JAIL position (1-based)
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/Jail_page.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
+            stage.showAndWait();
+        } catch (IOException e) { e.printStackTrace(); }
         nextTurn();
     }
 
     // Free parking
     void handleFreeParking(int playerIndex) {
         PlayerArea area = getPlayerArea(playerIndex);
-        area.getPlayer().setMoney(area.getPlayer().getMoney() + Main.freeParkingPool);
+        int collected = Main.freeParkingPool;
+        area.getPlayer().setMoney(area.getPlayer().getMoney() + collected);
         area.getLabel_amount().setText(area.getPlayer().getMoney() + " $");
         flashLabel(area.getLabel_amount());
-        System.out.println("Player " + playerIndex + " collected Free Parking $" + Main.freeParkingPool);
+        Main.Static_PopUp_Label.setText("Free Parking!\nCollect $" + collected);
+        System.out.println("Player " + playerIndex + " collected Free Parking $" + collected);
         Main.freeParkingPool = 0;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/FreeParking_page.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
+            stage.showAndWait();
+        } catch (IOException e) { e.printStackTrace(); }
         nextTurn();
     }
 
@@ -675,7 +768,6 @@ public class SecondPage implements Initializable {
         }
     }
 
-    // Domino symbol
     @FXML private void Click_ON_Symbol_Player1(MouseEvent e) { showDomino(1); }
     @FXML private void Click_ON_Symbol_Player2(MouseEvent e) { showDomino(2); }
     @FXML private void Click_ON_Symbol_Player3(MouseEvent e) { showDomino(3); }
@@ -728,7 +820,7 @@ public class SecondPage implements Initializable {
         ((Stage) ((ImageView) event.getSource()).getScene().getWindow()).close();
     }
 
-    //Helper
+    // Helpers
     private void setMainGamer(int i, PlayerArea area) {
         switch (i) {
             case 1: Main.Gamer1 = area; break; case 2: Main.Gamer2 = area; break;
@@ -758,7 +850,7 @@ public class SecondPage implements Initializable {
         return null;
     }
 
-    // UI getter
+    // UI getters
     Image getDiceImage(int number) {
         switch (number) {
             case 1: return Dice1.getImage(); case 2: return Dice2.getImage();

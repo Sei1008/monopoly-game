@@ -7,10 +7,10 @@
 
 <AnchorPane prefHeight="200" prefWidth="500" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML_Controllers.FreeParking_page">
     <children>
-        <ImageView fitHeight="200" fitWidth="500" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="false">
+        <ImageView fitHeight="200" fitWidth="500" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="true">
             <image><Image url="@../images/backgroundPopUp_FreeParking.png" /></image>
         </ImageView>
-        <Label fx:id="PopUp_Label" layoutX="50" layoutY="50" prefHeight="60" prefWidth="400" textAlignment="CENTER" wrapText="true">
+        <Label fx:id="PopUp_Label" visible="false" layoutX="50" layoutY="50" prefHeight="60" prefWidth="400" textAlignment="CENTER" wrapText="true">
             <font><Font name="Berlin Sans FB" size="22" /></font>
         </Label>
         <Button fx:id="Button_OK" layoutX="200" layoutY="140" prefHeight="30" prefWidth="100" text="OK" textFill="BLACK"

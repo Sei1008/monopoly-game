@@ -5,8 +5,6 @@ import MediaClass.PlayNewMedia;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -31,16 +29,7 @@ public class FreeParking_page extends Main implements Initializable {
 
     @FXML
     private void Click_On_OK(MouseEvent event) {
-        int newAmount = Gamer[Main.player_turn].getPlayer().getMoney() + Main.freeParkingPool;
-        Gamer[Main.player_turn].getPlayer().setMoney(newAmount);
-        Gamer[Main.player_turn].getLabel_amount().setText(newAmount + " $");
 
-        FadeTransition ft = new FadeTransition(Duration.millis(100),
-                Gamer[Main.player_turn].getLabel_amount());
-        ft.setFromValue(1); ft.setToValue(0);
-        ft.setCycleCount(12); ft.setAutoReverse(true); ft.play();
-
-        Main.freeParkingPool = 0;
         new PlayNewMedia("/sound/Free Parking.mp3").run();
         closeWindow(event);
     }
