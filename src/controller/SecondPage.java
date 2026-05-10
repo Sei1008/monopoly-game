@@ -1,6 +1,7 @@
 package controller;
 
 import model.PlayerArea;
+import model.CommunityChest;
 import MediaClass.PlayNewMedia;
 import Transitions.DiceTransition;
 import Transitions.DominoTransitions;
@@ -19,8 +20,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -39,12 +42,17 @@ import model.Dice;
 import model.Player;
 import model.Property;
 import model.Square;
-import model.SquareType;
 import config.Constants;
-import FXML_Controllers.PoPupPage;
-import FXML_Controllers.Chance_page;
 
 public class SecondPage implements Initializable {
+
+    // Root pane (for scaling)
+    @FXML private AnchorPane rootPane;
+
+    private static final double DESIGN_WIDTH  = 1920.0;
+    private static final double DESIGN_HEIGHT = 1080.0;
+
+    private double uiScale = 1.0;
 
     // Board
     @FXML private ImageView boardImageView;
@@ -98,10 +106,9 @@ public class SecondPage implements Initializable {
     @FXML private ImageView Hotel_21, Hotel_22, Hotel_23, Hotel_24, Hotel_25, Hotel_26, Hotel_27, Hotel_28, Hotel_29, Hotel_30;
     @FXML private ImageView Hotel_31, Hotel_32, Hotel_33, Hotel_34, Hotel_35, Hotel_36, Hotel_37, Hotel_38, Hotel_39, Hotel_40;
 
-    //  Data
+    // Data
     public static int numberOfPlayers;
     public static int startMoney;
-
     public static int player_loop = 0;
 
     private int diceClickCount = 0;
@@ -112,43 +119,59 @@ public class SecondPage implements Initializable {
     private PlayNewMedia footstepPlayer;
     private Board board;
     private Chance chance;
+    private CommunityChest communityChest;
     private Dice dice;
 
-    // gamers[1..8] — each PlayerArea stores its own position, money label, etc.
     private final PlayerArea[] gamers = new PlayerArea[9];
 
     // Board layout
     private final double sX = 1440.0 / 1000.0;
     private final double sY = 970.0 / 750.0;
-    private final double boardOffsetX = 255.0;
+    private final double boardOffsetX = 240.0;
     private final double boardOffsetY = 100.0;
-    private final double dominoW = 53.0/2.0;
-    private final double dominoH = 54.0/2.0;
-
-
+    private final double dominoW = 53.0 / 2.0;
+    private final double dominoH = 54.0 / 2.0;
 
     final double[] boardX = new double[41];
     final double[] boardY = new double[41];
 
-    // Initialize
+    // Init
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double screenWidth  = screenBounds.getWidth();
+        double screenHeight = screenBounds.getHeight();
+
+        double scaleX = screenWidth  / DESIGN_WIDTH;
+        double scaleY = screenHeight / DESIGN_HEIGHT;
+        uiScale = Math.min(scaleX, scaleY);
+
+        Scale scale = new Scale(uiScale, uiScale, 0, 0);
+        rootPane.getTransforms().add(scale);
+
+        double scaledW = DESIGN_WIDTH  * uiScale;
+        double scaledH = DESIGN_HEIGHT * uiScale;
+        rootPane.setPrefWidth(scaledW);   rootPane.setPrefHeight(scaledH);
+        rootPane.setMaxWidth(scaledW);    rootPane.setMaxHeight(scaledH);
+        rootPane.setMinWidth(scaledW);    rootPane.setMinHeight(scaledH);
+
+        javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle(DESIGN_WIDTH, DESIGN_HEIGHT);
+        rootPane.setClip(clip);
+        rootPane.setStyle("-fx-background-color: black;");
+
         numberOfPlayers = FirstPage.numberOfPlayers;
         startMoney = FirstPage.startMoney;
-        player_loop = 0; // always start with Player 1
+        player_loop = 0;
 
         boardImageView.setFitWidth(1440);
         boardImageView.setFitHeight(970);
-        boardImageView.setPreserveRatio(true);
-        boardImageView.setLayoutX(240 + (1440 - 1000.0*(970.0/750.0))/2.0);
+        boardImageView.setLayoutX(240);
         boardImageView.setLayoutY(110);
 
         topBar.setFitWidth(1440);
         topBar.setLayoutX(240);
 
-        bottomBar.setFitWidth(1440);
-        bottomBar.setLayoutX(240);
-        bottomBar.setLayoutY(1080);
+        bottomBar.setVisible(false);
 
         loadOwnedImages();
         setupBoardPositions();
@@ -159,9 +182,9 @@ public class SecondPage implements Initializable {
 
         board = new Board();
         chance = new Chance();
+        communityChest = new CommunityChest();
         dice = new Dice();
 
-        // Wire building/house/hotel overlay arrays
         for (int i = 0; i <= 40; i++) {
             Main.images_owned_buildings[i] = getArea(i);
             Main.images_house_buildings[i] = getHouse(i);
@@ -173,36 +196,28 @@ public class SecondPage implements Initializable {
 
             ImageView house = getHouse(i);
             if (house != null) {
-                house.setFitWidth(40);
-                house.setFitHeight(30);
+                house.setFitWidth(40); house.setFitHeight(30);
                 house.setPreserveRatio(true);
-                house.setScaleX(1.0);
-                house.setScaleY(1.0);
-                house.setLayoutX(boardX[i] + 7);
-                house.setLayoutY(boardY[i] + 12);
+                house.setScaleX(1.0); house.setScaleY(1.0);
+                house.setLayoutX(boardX[i] + 7); house.setLayoutY(boardY[i] + 12);
             }
 
             ImageView hotel = getHotel(i);
             if (hotel != null) {
-                hotel.setFitWidth(40);
-                hotel.setFitHeight(30);
+                hotel.setFitWidth(40); hotel.setFitHeight(30);
                 hotel.setPreserveRatio(true);
-                hotel.setScaleX(1.0);
-                hotel.setScaleY(1.0);
-                hotel.setLayoutX(boardX[i] + 7);
-                hotel.setLayoutY(boardY[i] + 12);
+                hotel.setScaleX(1.0); hotel.setScaleY(1.0);
+                hotel.setLayoutX(boardX[i] + 7); hotel.setLayoutY(boardY[i] + 12);
             }
         }
 
-        // Hide all dominos
         for (int i = 1; i <= 8; i++) getDomino(i).setVisible(false);
 
-        // Create PlayerArea for each active player, place domino at GO (square 1)
         for (int i = 1; i <= numberOfPlayers; i++) {
             Player player = new Player("Player " + i);
             player.setMoney(startMoney);
             gamers[i] = new PlayerArea(player, startMoney, getLabelAmount(i), 41);
-            gamers[i].getPlayer().setPosition(1); // start at GO (1-based)
+            gamers[i].getPlayer().setPosition(1);
             setMainGamer(i, gamers[i]);
 
             ImageView domino = getDomino(i);
@@ -214,16 +229,13 @@ public class SecondPage implements Initializable {
         setupPlayersInfo();
         setupArrows();
 
-        // Initial dice display
         Dice_var1.setImage(getDiceImage((int)(Math.random() * 6) + 1));
         Dice_var2.setImage(getDiceImage((int)(Math.random() * 6) + 1));
-        Dice_var1.setLayoutX(960);
-        Dice_var1.setLayoutY(500);
-        Dice_var2.setLayoutX(820);
-        Dice_var2.setLayoutY(500);
+        Dice_var1.setLayoutX(960); Dice_var1.setLayoutY(500);
+        Dice_var2.setLayoutX(820); Dice_var2.setLayoutY(500);
     }
 
-    // Load images view
+    // Load owned images
     void loadOwnedImages() {
         for (int i = 1; i <= 8; i++) {
             try {
@@ -235,7 +247,6 @@ public class SecondPage implements Initializable {
         }
     }
 
-    // Set/clear owned
     public void setOwned(int areaNumber, int playerIndex) {
         ImageView area = getArea(areaNumber);
         if (area != null && ownedImages[playerIndex] != null) {
@@ -261,17 +272,17 @@ public class SecondPage implements Initializable {
         boardX[ 8]= boardOffsetX+337*sX-dominoW;   boardY[ 8]= boardOffsetY+704*sY-dominoH;
         boardX[ 9]= boardOffsetX+255*sX-dominoW;   boardY[ 9]= boardOffsetY+704*sY-dominoH;
         boardX[10]= boardOffsetX+169*sX-dominoW;   boardY[10]= boardOffsetY+704*sY-dominoH;
-        boardX[11]= boardOffsetX+72*sX-dominoW;   boardY[11]= boardOffsetY+699*sY-dominoH;
-        boardX[12]= boardOffsetX+59*sX-dominoW;   boardY[12]= boardOffsetY+621*sY-dominoH;
-        boardX[13]= boardOffsetX+59*sX-dominoW;   boardY[13]= boardOffsetY+559*sY-dominoH;
-        boardX[14]= boardOffsetX+59*sX-dominoW;   boardY[14]= boardOffsetY+498*sY-dominoH;
-        boardX[15]= boardOffsetX+59*sX-dominoW;   boardY[15]= boardOffsetY+437*sY-dominoH;
-        boardX[16]= boardOffsetX+59*sX-dominoW;   boardY[16]= boardOffsetY+374*sY-dominoH;
-        boardX[17]= boardOffsetX+59*sX-dominoW;   boardY[17]= boardOffsetY+311*sY-dominoH;
-        boardX[18]= boardOffsetX+59*sX-dominoW;   boardY[18]= boardOffsetY+255*sY-dominoH;
-        boardX[19]= boardOffsetX+59*sX-dominoW;   boardY[19]= boardOffsetY+189*sY-dominoH;
-        boardX[20]= boardOffsetX+59*sX-dominoW;   boardY[20]= boardOffsetY+126*sY-dominoH;
-        boardX[21]= boardOffsetX+71*sX-dominoW;   boardY[21]= boardOffsetY+52*sY-dominoH;
+        boardX[11]= boardOffsetX+72*sX-dominoW;    boardY[11]= boardOffsetY+699*sY-dominoH;
+        boardX[12]= boardOffsetX+59*sX-dominoW;    boardY[12]= boardOffsetY+621*sY-dominoH;
+        boardX[13]= boardOffsetX+59*sX-dominoW;    boardY[13]= boardOffsetY+559*sY-dominoH;
+        boardX[14]= boardOffsetX+59*sX-dominoW;    boardY[14]= boardOffsetY+498*sY-dominoH;
+        boardX[15]= boardOffsetX+59*sX-dominoW;    boardY[15]= boardOffsetY+437*sY-dominoH;
+        boardX[16]= boardOffsetX+59*sX-dominoW;    boardY[16]= boardOffsetY+374*sY-dominoH;
+        boardX[17]= boardOffsetX+59*sX-dominoW;    boardY[17]= boardOffsetY+311*sY-dominoH;
+        boardX[18]= boardOffsetX+59*sX-dominoW;    boardY[18]= boardOffsetY+255*sY-dominoH;
+        boardX[19]= boardOffsetX+59*sX-dominoW;    boardY[19]= boardOffsetY+189*sY-dominoH;
+        boardX[20]= boardOffsetX+59*sX-dominoW;    boardY[20]= boardOffsetY+126*sY-dominoH;
+        boardX[21]= boardOffsetX+71*sX-dominoW;    boardY[21]= boardOffsetY+52*sY-dominoH;
         boardX[22]= boardOffsetX+173*sX-dominoW;   boardY[22]= boardOffsetY+49*sY-dominoH;
         boardX[23]= boardOffsetX+254*sX-dominoW;   boardY[23]= boardOffsetY+49*sY-dominoH;
         boardX[24]= boardOffsetX+337*sX-dominoW;   boardY[24]= boardOffsetY+49*sY-dominoH;
@@ -300,13 +311,11 @@ public class SecondPage implements Initializable {
     }
 
     void setActiveArrow(int playerIndex) {
-        // Stop all existing fades and hide all arrows
         for (int i = 1; i <= 8; i++) {
             if (arrowFades[i] != null) { arrowFades[i].stop(); arrowFades[i] = null; }
             getArrow(i).setVisible(false);
         }
         if (playerIndex < 1 || playerIndex > numberOfPlayers) return;
-        // Start blinking arrow for current player
         getArrow(playerIndex).setVisible(true);
         FadeTransition fade = new FadeTransition(Duration.millis(500), getArrow(playerIndex));
         fade.setFromValue(1); fade.setToValue(0);
@@ -335,38 +344,68 @@ public class SecondPage implements Initializable {
         }
     }
 
-    // Current player
-    int currentPlayerIndex() {
-        return player_loop + 1;
-    }
+    int currentPlayerIndex() { return player_loop + 1; }
 
     // Dice
-    @FXML
-    private void Click_Dice_1(MouseEvent event) { rollDice(); }
-
-    @FXML
-    private void Click_Dice_2(MouseEvent event) { rollDice(); }
+    @FXML private void Click_Dice_1(MouseEvent event) { rollDice(); }
+    @FXML private void Click_Dice_2(MouseEvent event) { rollDice(); }
 
     void rollDice() {
-        if (hasRolled) return; // block extra clicks mid-turn
+        if (hasRolled) return;
         hasRolled = true;
-
         diceClickCount = (diceClickCount % 10) + 1;
 
         int result1 = (int)(Math.random() * 6) + 1;
         int result2 = (int)(Math.random() * 6) + 1;
-        int total = result1 + result2;
+        int total   = result1 + result2;
+        boolean isDoubles = (result1 == result2);
 
-        // Run dice animation
+        // Chạy animation dice
         diceTransition = new DiceTransition(Dice_var1, Dice_var2, diceClickCount);
         diceTransition.run();
 
-        // After animation (3s), show result and move current player
         PauseTransition pause = new PauseTransition(Duration.millis(3000));
         pause.setOnFinished(e -> {
             Dice_var1.setImage(getDiceImage(result1));
             Dice_var2.setImage(getDiceImage(result2));
-            movePlayer(currentPlayerIndex(), total);
+
+            PlayerArea area = getPlayerArea(currentPlayerIndex());
+            Player player   = area.getPlayer();
+
+            if (player.isInJail()) {
+                player.incrementJailTurns(); // tăng số lượt ở tù
+                System.out.println("Player " + currentPlayerIndex()
+                        + " in jail, turn " + player.getJailTurns()
+                        + " | doubles=" + isDoubles);
+
+                if (isDoubles) {
+                    // Tung được đôi → ra tù, di chuyển bình thường
+                    player.setInJail(false);
+                    System.out.println("Doubles! Player " + currentPlayerIndex() + " leaves jail.");
+                    movePlayer(currentPlayerIndex(), total);
+
+                } else if (player.getJailTurns() >= 3) {
+                    // Lần 3 không được đôi → bắt buộc trả $50 rồi di chuyển
+                    player.setMoney(player.getMoney() - Constants.JAIL_FINE);
+                    Main.freeParkingPool += Constants.JAIL_FINE;
+                    area.getLabel_amount().setText(player.getMoney() + " $");
+                    flashLabel(area.getLabel_amount());
+                    player.setInJail(false);
+                    System.out.println("Player " + currentPlayerIndex()
+                            + " forced to pay $50 and leave jail.");
+                    movePlayer(currentPlayerIndex(), total);
+
+                } else {
+                    // Chưa đủ 3 lần, chưa được đôi → ở lại tù, chuyển lượt
+                    System.out.println("Player " + currentPlayerIndex()
+                            + " stays in jail.");
+                    Platform.runLater(() -> nextTurn());
+                }
+
+            } else {
+                // Không ở tù → di chuyển bình thường
+                movePlayer(currentPlayerIndex(), total);
+            }
         });
         pause.play();
     }
@@ -375,7 +414,6 @@ public class SecondPage implements Initializable {
     void movePlayer(int playerIndex, int steps) {
         PlayerArea area = getPlayerArea(playerIndex);
         if (area == null) return;
-
 
         int currentPos = area.getPlayer().getPosition();
         if (currentPos < 1 || currentPos > 40) currentPos = 1;
@@ -388,7 +426,6 @@ public class SecondPage implements Initializable {
         }
         final int newPos = calc;
 
-        // Collect $200 for passing GO
         if (passedGo) {
             area.getPlayer().setMoney(area.getPlayer().getMoney() + 200);
             area.getLabel_amount().setText(area.getPlayer().getMoney() + " $");
@@ -396,39 +433,32 @@ public class SecondPage implements Initializable {
         }
 
         ImageView domino = getDomino(playerIndex);
-        // Offset nhỏ khi nhiều player cùng ô để không chồng lên nhau
         final double offsetX = ((playerIndex - 1) % 2) * 15.0;
         final double offsetY = ((playerIndex - 1) / 2) * 15.0;
         domino.setLayoutX(boardX[currentPos] + offsetX);
         domino.setLayoutY(boardY[currentPos] + offsetY);
         domino.setVisible(true);
 
-        // Footstep sound
         if (footstepPlayer != null) footstepPlayer.dispose();
         footstepPlayer = new PlayNewMedia("/sounds/ollies-footsteps-looped.mp3");
         footstepPlayer.run();
 
-        // Animate domino walking across the board
-
-
         new DominoTransitions(domino, currentPos, steps, boardX, boardY, offsetX, offsetY).run();
 
-        // After animation completes, snap and handle the landed square
         long totalDuration = 400L * steps + 800;
         PauseTransition pause = new PauseTransition(Duration.millis(totalDuration));
         pause.setOnFinished(e -> {
             try {
-                area.getPlayer().setPosition(newPos); // lưu 1-based
+                area.getPlayer().setPosition(newPos);
                 domino.setLayoutX(boardX[newPos] + offsetX);
                 domino.setLayoutY(boardY[newPos] + offsetY);
-                System.out.println("[DEBUG] Domino layoutX=" + (boardX[newPos]+offsetX) + " layoutY=" + (boardY[newPos]+offsetY) + " for square " + newPos);
+                System.out.println("[DEBUG] Player " + playerIndex + " → square " + newPos);
                 if (footstepPlayer != null) {
                     footstepPlayer.stop(); footstepPlayer.dispose(); footstepPlayer = null;
                 }
-                // Use Platform.runLater so showAndWait popup is NOT called inside animation callback
                 Platform.runLater(() -> handleSquareEvent(playerIndex, newPos));
             } catch (Exception ex) {
-                System.out.println("[ERROR] movePlayer callback crashed: " + ex.getMessage());
+                System.out.println("[ERROR] movePlayer crashed: " + ex.getMessage());
                 ex.printStackTrace();
                 Platform.runLater(() -> nextTurn());
             }
@@ -437,7 +467,6 @@ public class SecondPage implements Initializable {
     }
 
     // Next turn
-    // Advances player_loop and resets hasRolled so next player can roll
     void nextTurn() {
         player_loop = (player_loop + 1) % numberOfPlayers;
         hasRolled = false;
@@ -445,7 +474,7 @@ public class SecondPage implements Initializable {
         System.out.println("Turn: Player " + currentPlayerIndex());
     }
 
-    // Handle square event
+    // Handle square
     void handleSquareEvent(int playerIndex, int position) {
         Main.player_turn = playerIndex;
         Main.static_player_place = position;
@@ -453,13 +482,14 @@ public class SecondPage implements Initializable {
             Square square = board.getSquare(position - 1);
             System.out.println("Player " + playerIndex + " landed on " + position + " (" + square.getType() + ")");
             switch (square.getType()) {
-                case PROPERTY:      handlePropertyLanding(playerIndex, square.getProperty()); break;
-                case CHANCE:        handleChance(playerIndex, position); break;
-                case TAX:           handleTax(playerIndex, position); break;
-                case JAIL:          handleJail(playerIndex); break;
-                case GO_JAIL:       handleGoToJail(playerIndex); break;
-                case FREE_PARKING:  handleFreeParking(playerIndex); break;
-                default:            nextTurn(); break;
+                case PROPERTY:        handlePropertyLanding(playerIndex, square.getProperty()); break;
+                case CHANCE:          handleChance(playerIndex, position); break;
+                case COMMUNITY_CHEST: handleCommunityChest(playerIndex, position); break;
+                case TAX:             handleTax(playerIndex, position); break;
+                case JAIL:            handleJail(playerIndex); break;
+                case GO_JAIL:         handleGoToJail(playerIndex); break;
+                case FREE_PARKING:    handleFreeParking(playerIndex); break;
+                default:              nextTurn(); break;
             }
         } catch (Exception ex) {
             System.out.println("[ERROR] handleSquareEvent crashed at pos " + position + ": " + ex.getMessage());
@@ -474,10 +504,8 @@ public class SecondPage implements Initializable {
         Player currentPlayerObj = currentArea.getPlayer();
 
         if (!property.isOwned()) {
-            // Unowned — show buy popup
             Main.currentProperty = property;
-            Main.Static_PopUp_Label.setText(
-                    property.getName() + "\nPrice: $" + property.getPrice());
+            Main.Static_PopUp_Label.setText(property.getName() + "\nPrice: $" + property.getPrice());
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/PoPupPage.fxml"));
                 Parent root = loader.load();
@@ -490,20 +518,31 @@ public class SecondPage implements Initializable {
             nextTurn();
 
         } else if (!property.getOwner().equals(currentPlayerObj)) {
-            // Owned by another player — pay rent silently
-            int rent = property.getRent();
+            // Tính rent theo số nhà / khách sạn
+            int baseRent  = property.getRent();
+            int houses    = property.getHouses();
+            int hotels    = property.getHotels();
+            int rent;
+            if (hotels >= 1) {
+                rent = baseRent * 5;        // khách sạn = 5× rent gốc
+            } else if (houses > 0) {
+                rent = baseRent * houses;   // nhà: nhân theo số nhà
+            } else {
+                rent = baseRent;
+            }
+
             currentArea.getPlayer().setMoney(currentArea.getPlayer().getMoney() - rent);
             currentArea.getLabel_amount().setText(currentArea.getPlayer().getMoney() + " $");
             flashLabel(currentArea.getLabel_amount());
+
             PlayerArea ownerArea = findPlayerAreaByPlayer(property.getOwner());
             if (ownerArea != null) {
                 ownerArea.getPlayer().setMoney(ownerArea.getPlayer().getMoney() + rent);
                 ownerArea.getLabel_amount().setText(ownerArea.getPlayer().getMoney() + " $");
             }
+            System.out.println("Rent paid: $" + rent + " (houses=" + houses + " hotels=" + hotels + ")");
             nextTurn();
-
         } else {
-            // Already owned by this player — skip building, just next turn
             nextTurn();
         }
     }
@@ -527,22 +566,91 @@ public class SecondPage implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
             stage.showAndWait();
         } catch (IOException e) { e.printStackTrace(); }
 
         int newPos0 = area.getPlayer().getPosition();
-        int newPosition = newPos0 + 1;
-        if (newPosition == 41) newPosition = 1;
+        int newPosition;
+        if (newPos0 == 0) {
+            newPosition = 1;
+        } else if (area.getPlayer().isInJail()) {
+            newPosition = 11;
+        } else {
+            newPosition = newPos0 + 1;
+        }
+        if (newPosition > 40) newPosition = 1;
 
         if (newPosition != originalPosition && newPosition >= 1 && newPosition <= 40) {
             area.getPlayer().setPosition(newPosition);
-
-            int stepsNeeded = (newPosition - originalPosition + 40) % 40;
-            if (stepsNeeded == 0) stepsNeeded = 40;
-            movePlayer(playerIndex, stepsNeeded);
+            ImageView domino = getDomino(playerIndex);
+            domino.setLayoutX(boardX[newPosition]);
+            domino.setLayoutY(boardY[newPosition]);
+            final int finalPos = newPosition;
+            Platform.runLater(() -> handleSquareEvent(playerIndex, finalPos));
         } else {
             nextTurn();
         }
+    }
+
+    // Community Chest
+    void handleCommunityChest(int playerIndex, int position) {
+        PlayerArea area = getPlayerArea(playerIndex);
+
+        communityChest.drawCard();
+
+        int[] poolRef = { Main.freeParkingPool };
+        communityChest.applyCardEffect(
+                area.getPlayer(), Main.freeParkingPool, getActivePlayers(), poolRef
+        );
+        Main.freeParkingPool = poolRef[0];
+
+        // Cập nhật tiền của người chơi hiện tại
+        area.getLabel_amount().setText(area.getPlayer().getMoney() + " $");
+        flashLabel(area.getLabel_amount());
+
+        // Cập nhật tiền các người chơi khác
+        // (vì một số lá bài như Birthday/Opera ảnh hưởng đến nhiều người)
+        for (int i = 1; i <= numberOfPlayers; i++) {
+            if (i != playerIndex && gamers[i] != null) {
+                gamers[i].getLabel_amount().setText(
+                        gamers[i].getPlayer().getMoney() + " $");
+            }
+        }
+
+        // Xử lý các lá bài thay đổi vị trí
+        if (area.getPlayer().isInJail()) {
+            // Lá "Go to Jail": model set position=10 (0-based) → convert sang 11 (1-based)
+            area.getPlayer().setPosition(11);
+            getDomino(playerIndex).setLayoutX(boardX[11]);
+            getDomino(playerIndex).setLayoutY(boardY[11]);
+        } else {
+            int newPos0 = area.getPlayer().getPosition(); // 0-based từ model
+            if (newPos0 == 0) {
+                // Lá "Advance to GO": model set position=0 → 1-based = 1
+                area.getPlayer().setPosition(1);
+                getDomino(playerIndex).setLayoutX(boardX[1]);
+                getDomino(playerIndex).setLayoutY(boardY[1]);
+            }
+        }
+
+        // Set nội dung popup rồi mở
+        Main.Static_PopUp_Label.setText(communityChest.getCardDescription());
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/CommunityChest_page.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
+            stage.showAndWait();
+        } catch (IOException e) { e.printStackTrace(); }
+
+        nextTurn();
     }
 
     // Tax
@@ -552,36 +660,75 @@ public class SecondPage implements Initializable {
         area.getPlayer().setMoney(area.getPlayer().getMoney() - taxAmount);
         area.getLabel_amount().setText(area.getPlayer().getMoney() + " $");
         flashLabel(area.getLabel_amount());
+        Main.freeParkingPool += taxAmount;
+        String taxLabel = (position == 5) ? "Income Tax\nPay $" + taxAmount : "Luxury Tax\nPay $" + taxAmount;
+        Main.Static_PopUp_Label.setText(taxLabel);
         System.out.println("Player " + playerIndex + " paid tax $" + taxAmount);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/Tax_page.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
+            stage.showAndWait();
+        } catch (IOException e) { e.printStackTrace(); }
         nextTurn();
     }
 
-    // Jail
+    // Jail — ô thăm tù, không làm gì cả, chuyển lượt
     void handleJail(int playerIndex) {
-        getPlayerArea(playerIndex).getPlayer().setInJail(true);
-        System.out.println("Player " + playerIndex + " is visiting Jail.");
+        System.out.println("Player " + playerIndex + " is just visiting Jail.");
         nextTurn();
     }
 
     // Go to jail
     void handleGoToJail(int playerIndex) {
         PlayerArea area = getPlayerArea(playerIndex);
-        area.getPlayer().setPosition(10); // Jail = boardIndex 10 (1-based)
+        area.getPlayer().setPosition(11);
         area.getPlayer().setInJail(true);
-        getDomino(playerIndex).setLayoutX(boardX[10]);
-        getDomino(playerIndex).setLayoutY(boardY[10]);
+        getDomino(playerIndex).setLayoutX(boardX[11]);
+        getDomino(playerIndex).setLayoutY(boardY[11]);
         System.out.println("Player " + playerIndex + " sent to Jail.");
+        Main.Static_PopUp_Label.setText("Go To Jail!");
+        Main.static_player_place = 30; // GO_JAIL position (1-based)
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/Jail_page.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
+            stage.showAndWait();
+        } catch (IOException e) { e.printStackTrace(); }
         nextTurn();
     }
 
     // Free parking
     void handleFreeParking(int playerIndex) {
         PlayerArea area = getPlayerArea(playerIndex);
-        area.getPlayer().setMoney(area.getPlayer().getMoney() + Main.freeParkingPool);
+        int collected = Main.freeParkingPool;
+        area.getPlayer().setMoney(area.getPlayer().getMoney() + collected);
         area.getLabel_amount().setText(area.getPlayer().getMoney() + " $");
         flashLabel(area.getLabel_amount());
-        System.out.println("Player " + playerIndex + " collected Free Parking $" + Main.freeParkingPool);
+        Main.Static_PopUp_Label.setText("Free Parking!\nCollect $" + collected);
+        System.out.println("Player " + playerIndex + " collected Free Parking $" + collected);
         Main.freeParkingPool = 0;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML_files/FreeParking_page.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
+            stage.centerOnScreen();
+            stage.showAndWait();
+        } catch (IOException e) { e.printStackTrace(); }
         nextTurn();
     }
 
@@ -593,7 +740,6 @@ public class SecondPage implements Initializable {
         ft.play();
     }
 
-    // Player name edit
     @FXML private void Click_On_Player1(MouseEvent e) { editPlayerName(1); }
     @FXML private void Click_On_Player2(MouseEvent e) { editPlayerName(2); }
     @FXML private void Click_On_Player3(MouseEvent e) { editPlayerName(3); }
@@ -610,8 +756,7 @@ public class SecondPage implements Initializable {
         getTextField(i).setText(getLabelName(i).getText());
     }
 
-    @FXML
-    private void Click_On_Arena(MouseEvent event) { saveAllTextfields(); }
+    @FXML private void Click_On_Arena(MouseEvent event) { saveAllTextfields(); }
 
     void saveAllTextfields() {
         for (int i = 1; i <= 8; i++) {
@@ -623,7 +768,6 @@ public class SecondPage implements Initializable {
         }
     }
 
-    // Player symbol
     @FXML private void Click_ON_Symbol_Player1(MouseEvent e) { showDomino(1); }
     @FXML private void Click_ON_Symbol_Player2(MouseEvent e) { showDomino(2); }
     @FXML private void Click_ON_Symbol_Player3(MouseEvent e) { showDomino(3); }
@@ -676,8 +820,7 @@ public class SecondPage implements Initializable {
         ((Stage) ((ImageView) event.getSource()).getScene().getWindow()).close();
     }
 
-    // Internal helpers
-
+    // Helpers
     private void setMainGamer(int i, PlayerArea area) {
         switch (i) {
             case 1: Main.Gamer1 = area; break; case 2: Main.Gamer2 = area; break;
@@ -707,8 +850,7 @@ public class SecondPage implements Initializable {
         return null;
     }
 
-    // UI element getters
-
+    // UI getters
     Image getDiceImage(int number) {
         switch (number) {
             case 1: return Dice1.getImage(); case 2: return Dice2.getImage();
