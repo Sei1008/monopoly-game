@@ -39,17 +39,17 @@ public class CommunityChest {
         cards.put(14, "Pay school tax.\nPay $150.");
         cards.put(15, "You have won second prize in a beauty contest.\nCollect $10.");
 
-        // Xáo trộn 1 lần đầu game, dùng Queue vòng tròn như Chance
+
         List<Integer> deckList = new ArrayList<>();
         for (int i = 0; i < 16; i++) deckList.add(i);
         Collections.shuffle(deckList);
         deck.addAll(deckList);
     }
 
-    // ── Rút 1 lá (Queue vòng tròn) ──────────────────────────────────────────
+
     public int drawCard() {
-        int topCard = deck.poll(); // lấy đầu Queue
-        deck.add(topCard);         // cho lại cuối (vòng tròn)
+        int topCard = deck.poll();
+        deck.add(topCard);
         lastDrawnCardID = topCard;
         return topCard;
     }
@@ -58,7 +58,6 @@ public class CommunityChest {
         return cards.get(lastDrawnCardID);
     }
 
-    // ── Áp dụng hiệu ứng lá bài ─────────────────────────────────────────────
     public void applyCardEffect(Player player, int freeParkingPool,
                                 List<Player> allPlayers, int[] poolRef) {
         switch (lastDrawnCardID) {
